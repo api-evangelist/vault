@@ -1,0 +1,52 @@
+name: HashiCorp Vault
+description: A tool for securely accessing secrets. A secret is anything that you want to tightly control access to, such as API keys, passwords, certificates, and more. Vault provides a unified interface to any secret, while providing tight access control and recording a detailed audit log.
+image: https://www.vaultproject.io/img/logo-hashicorp.svg
+url: https://www.vaultproject.io
+created: '2024'
+modified: '2024'
+apis:
+- name: Vault API
+  description: The Vault HTTP API gives you full access to Vault via HTTP. Every aspect of Vault can be controlled via this API.
+  image: https://www.vaultproject.io/img/logo-hashicorp.svg
+  humanURL: https://www.vaultproject.io
+  baseURL: https://vault.example.com
+  tags:
+  - secrets management
+  - security
+  - encryption
+  - authentication
+  - key management
+  properties:
+  - type: Documentation
+    url: https://developer.hashicorp.com/vault/api-docs
+  - type: OpenAPI
+    url: https://github.com/hashicorp/vault/blob/main/openapi.json
+  - type: Authentication
+    url: https://developer.hashicorp.com/vault/docs/auth
+  - type: Tutorials
+    url: https://developer.hashicorp.com/vault/tutorials
+  - type: GitHub
+    url: https://github.com/hashicorp/vault
+  - type: Changelog
+    url: https://github.com/hashicorp/vault/blob/main/CHANGELOG.md
+  - type: Pricing
+    url: https://www.hashicorp.com/products/vault/pricing
+  - type: Support
+    url: https://support.hashicorp.com
+common:
+- type: Portal
+  url: https://developer.hashicorp.com/vault
+- type: Getting Started
+  url: https://developer.hashicorp.com/vault/docs/get-started
+- type: Blog
+  url: https://www.hashicorp.com/blog/products/vault
+- type: Status
+  url: https://status.hashicorp.com
+- type: Terms of Service
+  url: https://www.hashicorp.com/terms-of-service
+- type: Privacy Policy
+  url: https://www.hashicorp.com/privacy
+maintainers:
+- FN: HashiCorp
+  email: support@hashicorp.com
+  url: https://www.hashicorp.com
