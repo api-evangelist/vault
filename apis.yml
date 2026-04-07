@@ -10,9 +10,9 @@ position: Consumer
 access: 3rd-Party
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
+  - Encryption
   - Secrets Management
   - Security
-  - Encryption
 url: >-
   https://raw.githubusercontent.com/api-evangelist/vault/refs/heads/main/apis.yml
 created: '2024-01-01'
