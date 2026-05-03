@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/vault/refs/heads/main/json-schema/vault-sys-auth-methods-response-schema.json",
+  "title": "AuthMethodsResponse",
+  "description": "AuthMethodsResponse schema from HashiCorp Vault API",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "object",
+      "description": "Map of mount path to auth method configuration.",
+      "additionalProperties": {
+        "$ref": "#/components/schemas/AuthMethodConfig"
+      }
+    }
+  }
+}

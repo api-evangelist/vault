@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/vault/refs/heads/main/json-schema/vault-sys-mounts-response-schema.json",
+  "title": "MountsResponse",
+  "description": "MountsResponse schema from HashiCorp Vault API",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "object",
+      "description": "Map of mount path to secrets engine configuration.",
+      "additionalProperties": {
+        "$ref": "#/components/schemas/MountConfig"
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/vault/refs/heads/main/json-structure/vault-sys-policy-response-structure.json",
+  "name": "PolicyResponse",
+  "description": "PolicyResponse schema from HashiCorp Vault API",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Policy name.",
+          "example": "dev-policy"
+        },
+        "policy": {
+          "type": "string",
+          "description": "HCL policy document.",
+          "example": "path \"secret/*\" { capabilities = [\"read\"] }"
+        }
+      }
+    }
+  }
+}

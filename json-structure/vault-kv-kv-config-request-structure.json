@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/vault/refs/heads/main/json-structure/vault-kv-kv-config-request-structure.json",
+  "name": "KvConfigRequest",
+  "description": "KvConfigRequest schema from HashiCorp Vault API",
+  "type": "object",
+  "properties": {
+    "max_versions": {
+      "type": "int32",
+      "minimum": 0,
+      "description": "Maximum number of versions to keep per secret. Older versions are automatically deleted when this limit is exceeded. Set to 0 for unlimited versions.",
+      "example": 10
+    },
+    "cas_required": {
+      "type": "boolean",
+      "description": "When true, all write operations require check-and-set (CAS) parameter to prevent accidental overwrites.",
+      "example": false
+    },
+    "delete_version_after": {
+      "type": "string",
+      "description": "Duration after which a secret version is automatically soft-deleted. Defaults to \"0s\" (never). Format is a Go duration string.",
+      "example": "0s"
+    }
+  }
+}

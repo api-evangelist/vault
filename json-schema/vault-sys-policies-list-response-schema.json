@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/vault/refs/heads/main/json-schema/vault-sys-policies-list-response-schema.json",
+  "title": "PoliciesListResponse",
+  "description": "PoliciesListResponse schema from HashiCorp Vault API",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "object",
+      "properties": {
+        "policies": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of policy names.",
+          "example": [
+            "default",
+            "root",
+            "dev-policy"
+          ]
+        }
+      }
+    }
+  }
+}

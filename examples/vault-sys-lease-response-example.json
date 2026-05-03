@@ -1,0 +1,9 @@
+{
+  "data": {
+    "id": "aws/creds/my-role/abc123",
+    "issue_time": "2025-03-15T14:30:00Z",
+    "expire_time": "2025-03-15T15:30:00Z",
+    "renewable": true,
+    "ttl": 3600
+  }
+}

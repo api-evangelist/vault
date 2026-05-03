@@ -1,0 +1,103 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "vault": "https://www.vaultproject.io/schema/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "AuthMethodConfig": "vault:AuthMethodConfig",
+    "AuthMethodsResponse": "vault:AuthMethodsResponse",
+    "EnableAuthMethodRequest": "vault:EnableAuthMethodRequest",
+    "EnableMountRequest": "vault:EnableMountRequest",
+    "HealthResponse": "vault:HealthResponse",
+    "LeaseIdRequest": "vault:LeaseIdRequest",
+    "LeaseRenewResponse": "vault:LeaseRenewResponse",
+    "LeaseResponse": "vault:LeaseResponse",
+    "MountConfig": "vault:MountConfig",
+    "MountsResponse": "vault:MountsResponse",
+    "PoliciesListResponse": "vault:PoliciesListResponse",
+    "PolicyRequest": "vault:PolicyRequest",
+    "PolicyResponse": "vault:PolicyResponse",
+    "RenewLeaseRequest": "vault:RenewLeaseRequest",
+    "type": {
+      "@id": "vault:type",
+      "@type": "xsd:string"
+    },
+    "description": "schema:description",
+    "accessor": {
+      "@id": "vault:accessor",
+      "@type": "xsd:string"
+    },
+    "data": {
+      "@id": "vault:data",
+      "@type": "@id"
+    },
+    "options": {
+      "@id": "vault:options",
+      "@type": "@id"
+    },
+    "initialized": {
+      "@id": "vault:initialized",
+      "@type": "xsd:boolean"
+    },
+    "sealed": {
+      "@id": "vault:sealed",
+      "@type": "xsd:boolean"
+    },
+    "standby": {
+      "@id": "vault:standby",
+      "@type": "xsd:boolean"
+    },
+    "version": "schema:version",
+    "clusterName": {
+      "@id": "vault:cluster_name",
+      "@type": "xsd:string"
+    },
+    "clusterId": {
+      "@id": "vault:cluster_id",
+      "@type": "xsd:string"
+    },
+    "leaseId": {
+      "@id": "vault:lease_id",
+      "@type": "xsd:string"
+    },
+    "renewable": {
+      "@id": "vault:renewable",
+      "@type": "xsd:boolean"
+    },
+    "leaseDuration": {
+      "@id": "vault:lease_duration",
+      "@type": "xsd:integer"
+    },
+    "id": {
+      "@id": "vault:id",
+      "@type": "xsd:string"
+    },
+    "issueTime": {
+      "@id": "vault:issue_time",
+      "@type": "xsd:dateTime"
+    },
+    "expireTime": {
+      "@id": "vault:expire_time",
+      "@type": "xsd:dateTime"
+    },
+    "ttl": {
+      "@id": "vault:ttl",
+      "@type": "xsd:integer"
+    },
+    "policies": {
+      "@id": "vault:policies",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "policy": {
+      "@id": "vault:policy",
+      "@type": "xsd:string"
+    },
+    "name": "schema:name",
+    "increment": {
+      "@id": "vault:increment",
+      "@type": "xsd:integer"
+    }
+  }
+}

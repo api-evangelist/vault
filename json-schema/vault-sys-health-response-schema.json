@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/vault/refs/heads/main/json-schema/vault-sys-health-response-schema.json",
+  "title": "HealthResponse",
+  "description": "HealthResponse schema from HashiCorp Vault API",
+  "type": "object",
+  "properties": {
+    "initialized": {
+      "type": "boolean",
+      "description": "Whether Vault has been initialized.",
+      "example": true
+    },
+    "sealed": {
+      "type": "boolean",
+      "description": "Whether Vault is sealed.",
+      "example": false
+    },
+    "standby": {
+      "type": "boolean",
+      "description": "Whether this Vault node is in standby mode.",
+      "example": false
+    },
+    "version": {
+      "type": "string",
+      "description": "Vault version string.",
+      "example": "2.0.0"
+    },
+    "cluster_name": {
+      "type": "string",
+      "description": "Name of the Vault cluster.",
+      "example": "vault-cluster-01"
+    },
+    "cluster_id": {
+      "type": "string",
+      "description": "UUID of the Vault cluster.",
+      "example": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+    }
+  }
+}

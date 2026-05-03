@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/vault/refs/heads/main/json-structure/vault-kv-kv-config-response-structure.json",
+  "name": "KvConfigResponse",
+  "description": "KvConfigResponse schema from HashiCorp Vault API",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "object",
+      "properties": {
+        "max_versions": {
+          "type": "int32",
+          "example": 10
+        },
+        "cas_required": {
+          "type": "boolean",
+          "example": false
+        },
+        "delete_version_after": {
+          "type": "string",
+          "example": "0s"
+        }
+      }
+    }
+  }
+}

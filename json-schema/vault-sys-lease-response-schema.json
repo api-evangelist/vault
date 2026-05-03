@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/vault/refs/heads/main/json-schema/vault-sys-lease-response-schema.json",
+  "title": "LeaseResponse",
+  "description": "LeaseResponse schema from HashiCorp Vault API",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Lease identifier.",
+          "example": "aws/creds/my-role/abc123"
+        },
+        "issue_time": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the lease was issued.",
+          "example": "2025-03-15T14:30:00Z"
+        },
+        "expire_time": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the lease will expire.",
+          "example": "2025-03-15T15:30:00Z"
+        },
+        "renewable": {
+          "type": "boolean",
+          "description": "Whether the lease can be renewed.",
+          "example": true
+        },
+        "ttl": {
+          "type": "integer",
+          "description": "Remaining TTL in seconds.",
+          "example": 3600
+        }
+      }
+    }
+  }
+}

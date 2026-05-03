@@ -1,0 +1,5 @@
+{
+  "type": "kv",
+  "description": "Application secrets",
+  "options": {}
+}

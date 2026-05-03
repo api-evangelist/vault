@@ -1,0 +1,79 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "vault": "https://www.vaultproject.io/schema/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "KvConfigRequest": "vault:KvConfigRequest",
+    "KvConfigResponse": "vault:KvConfigResponse",
+    "SecretDataRequest": "vault:SecretDataRequest",
+    "SecretDataResponse": "vault:SecretDataResponse",
+    "SecretMetadataRequest": "vault:SecretMetadataRequest",
+    "SecretMetadataResponse": "vault:SecretMetadataResponse",
+    "SecretVersionMetadata": "vault:SecretVersionMetadata",
+    "SecretWriteResponse": "vault:SecretWriteResponse",
+    "VersionsRequest": "vault:VersionsRequest",
+    "maxVersions": {
+      "@id": "vault:max_versions",
+      "@type": "xsd:integer"
+    },
+    "casRequired": {
+      "@id": "vault:cas_required",
+      "@type": "xsd:boolean"
+    },
+    "deleteVersionAfter": {
+      "@id": "vault:delete_version_after",
+      "@type": "xsd:string"
+    },
+    "data": {
+      "@id": "vault:data",
+      "@type": "@id"
+    },
+    "options": {
+      "@id": "vault:options",
+      "@type": "@id"
+    },
+    "cas": {
+      "@id": "vault:cas",
+      "@type": "xsd:integer"
+    },
+    "metadata": {
+      "@id": "vault:metadata",
+      "@type": "xsd:string"
+    },
+    "customMetadata": {
+      "@id": "vault:custom_metadata",
+      "@type": "@id"
+    },
+    "currentVersion": {
+      "@id": "vault:current_version",
+      "@type": "xsd:integer"
+    },
+    "oldestVersion": {
+      "@id": "vault:oldest_version",
+      "@type": "xsd:integer"
+    },
+    "createdTime": {
+      "@id": "vault:created_time",
+      "@type": "xsd:dateTime"
+    },
+    "updatedTime": {
+      "@id": "vault:updated_time",
+      "@type": "xsd:dateTime"
+    },
+    "versions": {
+      "@id": "vault:versions",
+      "@type": "@id"
+    },
+    "deletionTime": {
+      "@id": "vault:deletion_time",
+      "@type": "xsd:string"
+    },
+    "destroyed": {
+      "@id": "vault:destroyed",
+      "@type": "xsd:boolean"
+    },
+    "version": "schema:version"
+  }
+}

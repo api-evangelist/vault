@@ -1,0 +1,5 @@
+{
+  "type": "approle",
+  "description": "AppRole auth method",
+  "accessor": "auth_approle_abc123"
+}

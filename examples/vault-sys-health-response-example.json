@@ -1,0 +1,8 @@
+{
+  "initialized": true,
+  "sealed": false,
+  "standby": false,
+  "version": "2.0.0",
+  "cluster_name": "vault-cluster-01",
+  "cluster_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+}

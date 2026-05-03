@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/vault/refs/heads/main/json-structure/vault-sys-lease-id-request-structure.json",
+  "name": "LeaseIdRequest",
+  "description": "LeaseIdRequest schema from HashiCorp Vault API",
+  "type": "object",
+  "properties": {
+    "lease_id": {
+      "type": "string",
+      "description": "Unique identifier of the lease.",
+      "example": "aws/creds/my-role/abc123def456"
+    }
+  },
+  "required": [
+    "lease_id"
+  ]
+}

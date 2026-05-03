@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/vault/refs/heads/main/json-schema/vault-sys-enable-auth-method-request-schema.json",
+  "title": "EnableAuthMethodRequest",
+  "description": "EnableAuthMethodRequest schema from HashiCorp Vault API",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "Type of auth method to enable. Supported types include approle, aws, azure, github, jwt, kubernetes, ldap, oidc, token, userpass.",
+      "example": "approle"
+    },
+    "description": {
+      "type": "string",
+      "description": "Human-friendly description of the auth method.",
+      "example": "AppRole auth for microservices"
+    }
+  },
+  "required": [
+    "type"
+  ]
+}

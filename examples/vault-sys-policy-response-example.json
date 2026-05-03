@@ -1,0 +1,6 @@
+{
+  "data": {
+    "name": "dev-policy",
+    "policy": "path \"secret/*\" { capabilities = [\"read\"] }"
+  }
+}

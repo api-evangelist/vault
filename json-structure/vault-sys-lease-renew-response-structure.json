@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/vault/refs/heads/main/json-structure/vault-sys-lease-renew-response-structure.json",
+  "name": "LeaseRenewResponse",
+  "description": "LeaseRenewResponse schema from HashiCorp Vault API",
+  "type": "object",
+  "properties": {
+    "lease_id": {
+      "type": "string",
+      "description": "Lease identifier.",
+      "example": "aws/creds/my-role/abc123"
+    },
+    "renewable": {
+      "type": "boolean",
+      "description": "Whether the lease can be further renewed.",
+      "example": true
+    },
+    "lease_duration": {
+      "type": "int32",
+      "description": "New TTL in seconds.",
+      "example": 3600
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "lease_id": "aws/creds/my-role/abc123",
+  "renewable": true,
+  "lease_duration": 3600
+}

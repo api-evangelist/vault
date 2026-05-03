@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/vault/refs/heads/main/json-structure/vault-sys-enable-mount-request-structure.json",
+  "name": "EnableMountRequest",
+  "description": "EnableMountRequest schema from HashiCorp Vault API",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "Type of secrets engine to mount.",
+      "example": "kv"
+    },
+    "description": {
+      "type": "string",
+      "description": "Human-friendly description.",
+      "example": "Application secrets"
+    },
+    "options": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "type"
+  ]
+}

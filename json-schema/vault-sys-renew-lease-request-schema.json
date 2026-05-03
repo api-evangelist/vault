@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/vault/refs/heads/main/json-schema/vault-sys-renew-lease-request-schema.json",
+  "title": "RenewLeaseRequest",
+  "description": "RenewLeaseRequest schema from HashiCorp Vault API",
+  "type": "object",
+  "properties": {
+    "lease_id": {
+      "type": "string",
+      "description": "Unique identifier of the lease to renew.",
+      "example": "aws/creds/my-role/abc123def456"
+    },
+    "increment": {
+      "type": "integer",
+      "description": "Requested renewal duration in seconds. Vault may return a shorter duration based on policy limits.",
+      "example": 3600
+    }
+  },
+  "required": [
+    "lease_id"
+  ]
+}

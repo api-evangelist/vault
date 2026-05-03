@@ -1,0 +1,9 @@
+{
+  "data": {
+    "policies": [
+      "default",
+      "root",
+      "dev-policy"
+    ]
+  }
+}

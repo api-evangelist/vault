@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/vault/refs/heads/main/json-structure/vault-sys-mount-config-structure.json",
+  "name": "MountConfig",
+  "description": "MountConfig schema from HashiCorp Vault API",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "Secrets engine type.",
+      "example": "kv"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the mount.",
+      "example": "Key-Value store"
+    },
+    "accessor": {
+      "type": "string",
+      "description": "Mount accessor.",
+      "example": "kv_abc123"
+    },
+    "options": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  }
+}

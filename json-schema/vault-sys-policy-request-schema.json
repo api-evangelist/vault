@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/vault/refs/heads/main/json-schema/vault-sys-policy-request-schema.json",
+  "title": "PolicyRequest",
+  "description": "PolicyRequest schema from HashiCorp Vault API",
+  "type": "object",
+  "properties": {
+    "policy": {
+      "type": "string",
+      "description": "HCL policy document defining path-based access rules. Capabilities include create, read, update, delete, list, and sudo.",
+      "example": "path \"secret/data/myapp/*\" { capabilities = [\"create\", \"read\", \"update\"] }"
+    }
+  },
+  "required": [
+    "policy"
+  ]
+}

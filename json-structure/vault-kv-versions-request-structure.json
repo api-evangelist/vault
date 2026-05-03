@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/vault/refs/heads/main/json-structure/vault-kv-versions-request-structure.json",
+  "name": "VersionsRequest",
+  "description": "VersionsRequest schema from HashiCorp Vault API",
+  "type": "object",
+  "properties": {
+    "versions": {
+      "type": "array",
+      "items": {
+        "type": "int32"
+      },
+      "description": "List of version numbers to operate on.",
+      "example": [
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  "required": [
+    "versions"
+  ]
+}

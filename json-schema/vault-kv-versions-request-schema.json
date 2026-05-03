@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/vault/refs/heads/main/json-schema/vault-kv-versions-request-schema.json",
+  "title": "VersionsRequest",
+  "description": "VersionsRequest schema from HashiCorp Vault API",
+  "type": "object",
+  "properties": {
+    "versions": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "description": "List of version numbers to operate on.",
+      "example": [
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  "required": [
+    "versions"
+  ]
+}

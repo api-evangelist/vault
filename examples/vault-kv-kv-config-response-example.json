@@ -1,0 +1,7 @@
+{
+  "data": {
+    "max_versions": 10,
+    "cas_required": false,
+    "delete_version_after": "0s"
+  }
+}

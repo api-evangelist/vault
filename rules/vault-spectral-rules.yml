@@ -1,0 +1,253 @@
+rules:
+
+  # INFO / METADATA
+  info-title-required:
+    description: API title must be present.
+    severity: error
+    given: "$.info"
+    then:
+      field: title
+      function: truthy
+
+  info-title-starts-with-hashicorp-vault:
+    description: API title should start with "HashiCorp Vault".
+    severity: warn
+    given: "$.info.title"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^HashiCorp Vault"
+
+  info-description-required:
+    description: API info description must be present.
+    severity: warn
+    given: "$.info"
+    then:
+      field: description
+      function: truthy
+
+  info-version-required:
+    description: API version must be specified.
+    severity: error
+    given: "$.info"
+    then:
+      field: version
+      function: truthy
+
+  # OPENAPI VERSION
+  openapi-version-3x:
+    description: API specification must use OpenAPI 3.x.
+    severity: error
+    given: "$"
+    then:
+      field: openapi
+      function: pattern
+      functionOptions:
+        match: "^3\\."
+
+  # SERVERS
+  servers-required:
+    description: Servers array must be defined.
+    severity: error
+    given: "$"
+    then:
+      field: servers
+      function: truthy
+
+  servers-https-required:
+    description: Server URLs must use HTTPS.
+    severity: error
+    given: "$.servers[*].url"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^https://"
+
+  # PATHS
+  paths-v1-prefix:
+    description: All Vault API paths begin at the server level v1 — paths should be relative.
+    severity: info
+    given: "$.paths"
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "^/v1"
+
+  paths-no-trailing-slash:
+    description: Paths must not end with a trailing slash.
+    severity: warn
+    given: "$.paths"
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "/$"
+
+  # OPERATIONS
+  operation-operationId-required:
+    description: All operations must have an operationId.
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete,options,head]"
+    then:
+      field: operationId
+      function: truthy
+
+  operation-operationId-camelCase:
+    description: operationId should use camelCase.
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete].operationId"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]*$"
+
+  operation-summary-required:
+    description: All operations must have a summary.
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete,options,head]"
+    then:
+      field: summary
+      function: truthy
+
+  operation-summary-starts-with-hashicorp-vault:
+    description: Operation summaries should start with "HashiCorp Vault".
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete].summary"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^HashiCorp Vault"
+
+  operation-description-required:
+    description: All operations should have a description.
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: description
+      function: truthy
+
+  operation-tags-required:
+    description: All operations must have at least one tag.
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: tags
+      function: truthy
+
+  # TAGS
+  tags-global-defined:
+    description: Global tags array should be defined.
+    severity: warn
+    given: "$"
+    then:
+      field: tags
+      function: truthy
+
+  # PARAMETERS
+  parameter-description-required:
+    description: All parameters should have a description.
+    severity: warn
+    given: "$..parameters[*]"
+    then:
+      field: description
+      function: truthy
+
+  # RESPONSES
+  response-success-required:
+    description: Operations must define at least one success (2xx or 204) response.
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete].responses"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          anyOf:
+            - required: ['200']
+            - required: ['201']
+            - required: ['204']
+
+  response-403-required:
+    description: Vault operations should define 403 Permission Denied response.
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete].responses"
+    then:
+      field: '403'
+      function: truthy
+
+  response-description-required:
+    description: All responses must have a description.
+    severity: error
+    given: "$.paths[*][*].responses[*]"
+    then:
+      field: description
+      function: truthy
+
+  # SCHEMAS
+  schema-description-required:
+    description: Schema definitions should have descriptions.
+    severity: warn
+    given: "$.components.schemas[*]"
+    then:
+      field: description
+      function: truthy
+
+  schema-properties-have-descriptions:
+    description: Schema properties should have descriptions.
+    severity: info
+    given: "$.components.schemas[*].properties[*]"
+    then:
+      field: description
+      function: truthy
+
+  # SECURITY
+  security-schemes-defined:
+    description: Security schemes must be defined in components.
+    severity: error
+    given: "$.components"
+    then:
+      field: securitySchemes
+      function: truthy
+
+  vault-token-header-not-bearer:
+    description: Vault uses X-Vault-Token header, not Authorization Bearer.
+    severity: info
+    given: "$.components.securitySchemes[?(@.type == 'apiKey')]"
+    then:
+      field: name
+      function: pattern
+      functionOptions:
+        match: "^X-Vault-Token$"
+
+  # HTTP METHOD CONVENTIONS
+  get-no-request-body:
+    description: GET operations must not have a request body.
+    severity: error
+    given: "$.paths[*].get"
+    then:
+      field: requestBody
+      function: falsy
+
+  delete-returns-204:
+    description: DELETE operations should return 204 No Content.
+    severity: info
+    given: "$.paths[*].delete.responses"
+    then:
+      field: '204'
+      function: truthy
+
+  # GENERAL QUALITY
+  no-empty-description:
+    description: Descriptions must not be empty strings.
+    severity: warn
+    given: "$..description"
+    then:
+      function: pattern
+      functionOptions:
+        match: ".+"
+
+  operation-has-microcks-extension:
+    description: Operations should have x-microcks-operation for mock compatibility.
+    severity: info
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: x-microcks-operation
+      function: truthy

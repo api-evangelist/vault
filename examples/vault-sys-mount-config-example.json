@@ -1,0 +1,6 @@
+{
+  "type": "kv",
+  "description": "Key-Value store",
+  "accessor": "kv_abc123",
+  "options": {}
+}
