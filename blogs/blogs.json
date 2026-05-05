@@ -1,0 +1,13 @@
+{
+  "repo": "vault",
+  "feeds": [
+    {
+      "source": "https://www.hashicorp.com/blog/products/vault",
+      "feed_url": "https://www.hashicorp.com/blog/feed.xml",
+      "saved": 10,
+      "title": "HashiCorp Blog"
+    }
+  ],
+  "post_count": 10,
+  "fetched": "2026-05-03T23:38:08Z"
+}
