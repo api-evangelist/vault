@@ -54,7 +54,7 @@ apis:
       - type: Example
         url: examples/vault-kv-secret-data-response-example.json
         title: Secret Data Response Example
-      - type: JSON-LD
+      - type: JSONLD
         url: json-ld/vault-kv-context.jsonld
   - aid: vault:vault-sys
     name: HashiCorp Vault System Backend API
@@ -84,7 +84,7 @@ apis:
       - type: Example
         url: examples/vault-sys-health-response-example.json
         title: Health Response Example
-      - type: JSON-LD
+      - type: JSONLD
         url: json-ld/vault-sys-context.jsonld
   - aid: vault:vault-api
     name: Vault HTTP API
