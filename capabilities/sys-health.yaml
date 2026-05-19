@@ -1,0 +1,72 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: HashiCorp Vault System Backend API — Health
+  description: 'HashiCorp Vault System Backend API — Health. 1 operations. Lead operation: HashiCorp Vault Get Health Status.
+    Self-contained Naftiko capability covering one Vault business surface.'
+  tags:
+  - Vault
+  - Health
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    VAULT_API_KEY: VAULT_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: sys-health
+    baseUri: https://vault.example.com/v1
+    description: HashiCorp Vault System Backend API — Health business capability. Self-contained, no shared references.
+    resources:
+    - name: sys-health
+      path: /sys/health
+      operations:
+      - name: gethealth
+        method: GET
+        description: HashiCorp Vault Get Health Status
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: apikey
+      key: X-Vault-Token
+      value: '{{env.VAULT_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: sys-health-rest
+    port: 8080
+    description: REST adapter for HashiCorp Vault System Backend API — Health. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/sys/health
+      name: sys-health
+      description: REST surface for sys-health.
+      operations:
+      - method: GET
+        name: gethealth
+        description: HashiCorp Vault Get Health Status
+        call: sys-health.gethealth
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: sys-health-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for HashiCorp Vault System Backend API — Health. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: hashicorp-vault-get-health-status
+      description: HashiCorp Vault Get Health Status
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: sys-health.gethealth
+      outputParameters:
+      - type: object
+        mapping: $.
