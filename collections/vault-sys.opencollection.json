@@ -1,0 +1,292 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "HashiCorp Vault System Backend API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Vault-Token",
+      "value": "{{X-Vault-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Health",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "HashiCorp Vault Get Health Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.example.com/v1/sys/health"
+          },
+          "docs": "Returns the health status of Vault. Returns HTTP 200 if Vault is initialized and unsealed, 429 if standby, 472 if recovery mode, and 503 if sealed or uninitialized."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Auth Methods",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "HashiCorp Vault List Auth Methods",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.example.com/v1/sys/auth"
+          },
+          "docs": "List all currently enabled authentication methods. Returns configuration details for each auth method including type, description, and tuning settings."
+        },
+        {
+          "info": {
+            "name": "HashiCorp Vault Enable Auth Method",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.example.com/v1/sys/auth/:path",
+            "params": [
+              {
+                "name": "path",
+                "value": "",
+                "type": "path",
+                "description": "Mount path for the auth method or secrets engine. Must not contain slashes at the beginning or end."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Enable a new auth method at the specified path. Requires sudo capability. Supported types include approle, aws, azure, github, jwt, kubernetes, ldap, oidc, okta, radius, token, and userpass."
+        },
+        {
+          "info": {
+            "name": "HashiCorp Vault Disable Auth Method",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://vault.example.com/v1/sys/auth/:path",
+            "params": [
+              {
+                "name": "path",
+                "value": "",
+                "type": "path",
+                "description": "Mount path for the auth method or secrets engine. Must not contain slashes at the beginning or end."
+              }
+            ]
+          },
+          "docs": "Disable the auth method at the specified path. Any tokens associated with this auth method will be revoked. Requires sudo capability."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Secrets Engines",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "HashiCorp Vault List Secrets Engine Mounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.example.com/v1/sys/mounts"
+          },
+          "docs": "List all mounted secrets engines with their configuration, accessor, and options. Returns a map of mount path to engine configuration."
+        },
+        {
+          "info": {
+            "name": "HashiCorp Vault Enable Secrets Engine",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.example.com/v1/sys/mounts/:path",
+            "params": [
+              {
+                "name": "path",
+                "value": "",
+                "type": "path",
+                "description": "Mount path for the auth method or secrets engine. Must not contain slashes at the beginning or end."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Mount a new secrets engine at the specified path. Supported types include aws, azure, consul, database, gcp, kv, nomad, pki, rabbitmq, ssh, totp, transit, and more."
+        },
+        {
+          "info": {
+            "name": "HashiCorp Vault Disable Secrets Engine",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://vault.example.com/v1/sys/mounts/:path",
+            "params": [
+              {
+                "name": "path",
+                "value": "",
+                "type": "path",
+                "description": "Mount path for the auth method or secrets engine. Must not contain slashes at the beginning or end."
+              }
+            ]
+          },
+          "docs": "Unmount a secrets engine. All secrets stored in this engine will be revoked. This operation is irreversible."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Policies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "HashiCorp Vault List ACL Policies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.example.com/v1/sys/policies/acl"
+          },
+          "docs": "List all ACL policies currently configured in Vault. Returns a list of policy names."
+        },
+        {
+          "info": {
+            "name": "HashiCorp Vault Read ACL Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.example.com/v1/sys/policies/acl/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the policy."
+              }
+            ]
+          },
+          "docs": "Retrieve the HCL rules for an ACL policy by name. Returns the policy document which defines path-based access rules."
+        },
+        {
+          "info": {
+            "name": "HashiCorp Vault Write ACL Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.example.com/v1/sys/policies/acl/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the policy."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create or update an ACL policy. Policies are written in HashiCorp Configuration Language (HCL) and define path-based access rules with capabilities such as create, read, update, delete, list, and sudo."
+        },
+        {
+          "info": {
+            "name": "HashiCorp Vault Delete ACL Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://vault.example.com/v1/sys/policies/acl/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the policy."
+              }
+            ]
+          },
+          "docs": "Delete an ACL policy from Vault. Tokens associated with this policy will lose access defined by the policy."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Leases",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "HashiCorp Vault Lookup Lease",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://vault.example.com/v1/sys/leases/lookup",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieve information about a lease including its expiration time, renewable status, and associated secret path."
+        },
+        {
+          "info": {
+            "name": "HashiCorp Vault Renew Lease",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://vault.example.com/v1/sys/leases/renew",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Renew a lease, extending the TTL of the associated secret or token. Only renewable leases can be renewed."
+        },
+        {
+          "info": {
+            "name": "HashiCorp Vault Revoke Lease",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://vault.example.com/v1/sys/leases/revoke",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Revoke a lease and the associated secret. For dynamic secrets, this will trigger revocation of the credential in the target system."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,265 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "HashiCorp Vault KV Secrets Engine API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Vault-Token",
+      "value": "{{X-Vault-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Secrets Config",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "HashiCorp Vault Get KV Configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.example.com/v1/secret/config"
+          },
+          "docs": "Retrieve the current configuration for the KV v2 secrets engine including maximum number of versions, CAS required setting, delete version after duration, and whether the engine is enabled."
+        },
+        {
+          "info": {
+            "name": "HashiCorp Vault Set KV Configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.example.com/v1/secret/config",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Configure backend-level settings for the KV v2 secrets engine including maximum number of secret versions to keep and whether CAS (check-and-set) is required for write operations."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Secrets Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "HashiCorp Vault Read Secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.example.com/v1/secret/data/:path",
+            "params": [
+              {
+                "name": "path",
+                "value": "",
+                "type": "path",
+                "description": "Path to the secret in the KV v2 store. Use forward slashes to organize secrets in a hierarchy. Example: myapp/production/db."
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the version to return. If not set the latest version is returned."
+              }
+            ]
+          },
+          "docs": "Retrieve the secret data and metadata for a given path from the KV v2 secrets engine. Returns the latest version by default or a specific version if the version parameter is specified."
+        },
+        {
+          "info": {
+            "name": "HashiCorp Vault Write Secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.example.com/v1/secret/data/:path",
+            "params": [
+              {
+                "name": "path",
+                "value": "",
+                "type": "path",
+                "description": "Path to the secret in the KV v2 store. Use forward slashes to organize secrets in a hierarchy. Example: myapp/production/db."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create or update a secret at the given path in the KV v2 secrets engine. Optionally supports check-and-set (CAS) operation to prevent accidental overwrites. Each write creates a new version."
+        },
+        {
+          "info": {
+            "name": "HashiCorp Vault Delete Latest Secret Version",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://vault.example.com/v1/secret/data/:path",
+            "params": [
+              {
+                "name": "path",
+                "value": "",
+                "type": "path",
+                "description": "Path to the secret in the KV v2 store. Use forward slashes to organize secrets in a hierarchy. Example: myapp/production/db."
+              }
+            ]
+          },
+          "docs": "Soft delete the latest version of a secret at the given path. The secret data is not permanently removed and can be undeleted. Use the destroy endpoint to permanently remove secret data."
+        },
+        {
+          "info": {
+            "name": "HashiCorp Vault Delete Secret Versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.example.com/v1/secret/delete/:path",
+            "params": [
+              {
+                "name": "path",
+                "value": "",
+                "type": "path",
+                "description": "Path to the secret in the KV v2 store. Use forward slashes to organize secrets in a hierarchy. Example: myapp/production/db."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Soft delete one or more specified versions of a secret. The deleted versions can be recovered using the undelete endpoint. The key data is not permanently removed."
+        },
+        {
+          "info": {
+            "name": "HashiCorp Vault Undelete Secret Versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.example.com/v1/secret/undelete/:path",
+            "params": [
+              {
+                "name": "path",
+                "value": "",
+                "type": "path",
+                "description": "Path to the secret in the KV v2 store. Use forward slashes to organize secrets in a hierarchy. Example: myapp/production/db."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Restore one or more previously soft-deleted versions of a secret. Versions that have been permanently destroyed cannot be recovered."
+        },
+        {
+          "info": {
+            "name": "HashiCorp Vault Destroy Secret Versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://vault.example.com/v1/secret/destroy/:path",
+            "params": [
+              {
+                "name": "path",
+                "value": "",
+                "type": "path",
+                "description": "Path to the secret in the KV v2 store. Use forward slashes to organize secrets in a hierarchy. Example: myapp/production/db."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Permanently remove the data for one or more versions of a secret. Unlike soft delete, this operation is irreversible and the data cannot be recovered."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Secrets Metadata",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "HashiCorp Vault Read Secret Metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.example.com/v1/secret/metadata/:path",
+            "params": [
+              {
+                "name": "path",
+                "value": "",
+                "type": "path",
+                "description": "Path to the secret in the KV v2 store. Use forward slashes to organize secrets in a hierarchy. Example: myapp/production/db."
+              }
+            ]
+          },
+          "docs": "Retrieve metadata and version history for a secret at the given path. Returns all version timestamps, current version number, max versions setting, CAS required status, and custom metadata."
+        },
+        {
+          "info": {
+            "name": "HashiCorp Vault Write Secret Metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.example.com/v1/secret/metadata/:path",
+            "params": [
+              {
+                "name": "path",
+                "value": "",
+                "type": "path",
+                "description": "Path to the secret in the KV v2 store. Use forward slashes to organize secrets in a hierarchy. Example: myapp/production/db."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create or update metadata for a secret including max versions, CAS required setting, delete version after duration, and custom metadata key-value pairs."
+        },
+        {
+          "info": {
+            "name": "HashiCorp Vault Delete Secret Metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://vault.example.com/v1/secret/metadata/:path",
+            "params": [
+              {
+                "name": "path",
+                "value": "",
+                "type": "path",
+                "description": "Path to the secret in the KV v2 store. Use forward slashes to organize secrets in a hierarchy. Example: myapp/production/db."
+              }
+            ]
+          },
+          "docs": "Permanently delete all metadata and versions for a secret at the given path. This operation is irreversible and removes all version history."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
