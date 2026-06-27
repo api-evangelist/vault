@@ -5,14 +5,17 @@
       "source": "https://www.hashicorp.com/blog/feed.xml",
       "feed_url": "https://www.hashicorp.com/blog/feed.xml",
       "title": "",
-      "saved": 3,
+      "saved": 6,
       "method": "feed"
     },
     {
       "source": "https://www.vaultproject.io",
-      "error": "HTTPError"
+      "feed_url": "https://www.vaultproject.io",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     }
   ],
-  "post_count": 14,
-  "fetched": "2026-06-14T20:42:17Z"
+  "post_count": 23,
+  "fetched": "2026-06-27T12:03:07Z"
 }
