@@ -1,0 +1,19 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/vault-kv-openapi.yml, openapi/vault-sys-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: vaultToken
+  type: apiKey
+  in: header
+  parameter: X-Vault-Token
+  description: Vault token for authenticating API requests. Tokens can be created via login
+    endpoints or the token auth method. The token must have appropriate policy permissions for
+    the requested operations.
+  sources:
+  - openapi/vault-kv-openapi.yml
+  - openapi/vault-sys-openapi.yml

@@ -106,6 +106,10 @@ apis:
       - type: ChangeLog
         url: https://github.com/hashicorp/vault/blob/main/CHANGELOG.md
 common:
+  - type: DomainSecurity
+    url: security/vault-domain-security.yml
+  - type: Authentication
+    url: authentication/vault-authentication.yml
   - type: Portal
     url: https://developer.hashicorp.com/vault
   - type: Website
