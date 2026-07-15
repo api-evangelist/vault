@@ -106,6 +106,8 @@ apis:
       - type: ChangeLog
         url: https://github.com/hashicorp/vault/blob/main/CHANGELOG.md
 common:
+  - type: AgenticAccess
+    url: agentic-access/vault-agentic-access.yml
   - type: DomainSecurity
     url: security/vault-domain-security.yml
   - type: Authentication
