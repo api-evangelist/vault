@@ -1,0 +1,181 @@
+openapi: 3.0.3
+info:
+  title: HashiCorp Vault KV Secrets Engine Auth Methods API
+  description: 'The HashiCorp Vault KV (Key/Value) secrets engine API provides endpoints for reading, writing, versioning, and managing secrets stored in Vault. KV v2 supports secret versioning, metadata management, soft delete, and permanent destruction of secret versions. All paths are mounted under the KV engine mount point (default: secret/).'
+  version: '2.0'
+  contact:
+    name: HashiCorp Support
+    url: https://support.hashicorp.com
+  termsOfService: https://www.hashicorp.com/terms-of-service
+  license:
+    name: BUSL-1.1
+    url: https://github.com/hashicorp/vault/blob/main/LICENSE
+  x-generated-from: documentation
+servers:
+- url: https://vault.example.com/v1
+  description: Vault Server Instance
+security:
+- vaultToken: []
+tags:
+- name: Auth Methods
+  description: Enable, disable, list, and configure authentication methods.
+paths:
+  /sys/auth:
+    get:
+      operationId: listAuthMethods
+      summary: HashiCorp Vault List Auth Methods
+      description: List all currently enabled authentication methods. Returns configuration details for each auth method including type, description, and tuning settings.
+      tags:
+      - Auth Methods
+      responses:
+        '200':
+          description: Successfully retrieved auth methods
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthMethodsResponse'
+              examples:
+                listAuthMethods200Example:
+                  summary: Default listAuthMethods 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      token/:
+                        type: token
+                        description: token based credentials
+                        accessor: abc123
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /sys/auth/{path}:
+    post:
+      operationId: enableAuthMethod
+      summary: HashiCorp Vault Enable Auth Method
+      description: Enable a new auth method at the specified path. Requires sudo capability. Supported types include approle, aws, azure, github, jwt, kubernetes, ldap, oidc, okta, radius, token, and userpass.
+      tags:
+      - Auth Methods
+      parameters:
+      - $ref: '#/components/parameters/MountPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnableAuthMethodRequest'
+            examples:
+              enableAuthMethodRequestExample:
+                summary: Default enableAuthMethod request
+                x-microcks-default: true
+                value:
+                  type: approle
+                  description: AppRole auth method for service accounts
+      responses:
+        '204':
+          description: Auth method enabled successfully
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: disableAuthMethod
+      summary: HashiCorp Vault Disable Auth Method
+      description: Disable the auth method at the specified path. Any tokens associated with this auth method will be revoked. Requires sudo capability.
+      tags:
+      - Auth Methods
+      parameters:
+      - $ref: '#/components/parameters/MountPath'
+      responses:
+        '204':
+          description: Auth method disabled successfully
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    EnableAuthMethodRequest:
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          description: Type of auth method to enable. Supported types include approle, aws, azure, github, jwt, kubernetes, ldap, oidc, token, userpass.
+          example: approle
+        description:
+          type: string
+          description: Human-friendly description of the auth method.
+          example: AppRole auth for microservices
+    AuthMethodConfig:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Auth method type.
+          example: approle
+        description:
+          type: string
+          description: Description of the auth method.
+          example: AppRole auth method
+        accessor:
+          type: string
+          description: Accessor for the auth method.
+          example: auth_approle_abc123
+    VaultError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
+          example:
+          - permission denied
+    AuthMethodsResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          description: Map of mount path to auth method configuration.
+          additionalProperties:
+            $ref: '#/components/schemas/AuthMethodConfig'
+  parameters:
+    MountPath:
+      name: path
+      in: path
+      required: true
+      description: Mount path for the auth method or secrets engine. Must not contain slashes at the beginning or end.
+      schema:
+        type: string
+        example: approle
+  securitySchemes:
+    vaultToken:
+      type: apiKey
+      in: header
+      name: X-Vault-Token
+      description: Vault token for authenticating API requests. Tokens can be created via login endpoints or the token auth method. The token must have appropriate policy permissions for the requested operations.
+externalDocs:
+  description: Vault KV v2 API Reference
+  url: https://developer.hashicorp.com/vault/api-docs/secret/kv/kv-v2

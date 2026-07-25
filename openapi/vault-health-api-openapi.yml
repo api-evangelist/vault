@@ -1,0 +1,92 @@
+openapi: 3.0.3
+info:
+  title: HashiCorp Vault KV Secrets Engine Auth Methods Health API
+  description: 'The HashiCorp Vault KV (Key/Value) secrets engine API provides endpoints for reading, writing, versioning, and managing secrets stored in Vault. KV v2 supports secret versioning, metadata management, soft delete, and permanent destruction of secret versions. All paths are mounted under the KV engine mount point (default: secret/).'
+  version: '2.0'
+  contact:
+    name: HashiCorp Support
+    url: https://support.hashicorp.com
+  termsOfService: https://www.hashicorp.com/terms-of-service
+  license:
+    name: BUSL-1.1
+    url: https://github.com/hashicorp/vault/blob/main/LICENSE
+  x-generated-from: documentation
+servers:
+- url: https://vault.example.com/v1
+  description: Vault Server Instance
+security:
+- vaultToken: []
+tags:
+- name: Health
+  description: Check Vault health and initialization status.
+paths:
+  /sys/health:
+    get:
+      operationId: getHealth
+      summary: HashiCorp Vault Get Health Status
+      description: Returns the health status of Vault. Returns HTTP 200 if Vault is initialized and unsealed, 429 if standby, 472 if recovery mode, and 503 if sealed or uninitialized.
+      tags:
+      - Health
+      security: []
+      responses:
+        '200':
+          description: Vault is initialized and active (leader)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+              examples:
+                getHealth200Example:
+                  summary: Default getHealth 200 response
+                  x-microcks-default: true
+                  value:
+                    initialized: true
+                    sealed: false
+                    standby: false
+                    version: 2.0.0
+                    cluster_name: vault-cluster-01
+        '429':
+          description: Vault is standby
+        '503':
+          description: Vault is sealed or uninitialized
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    HealthResponse:
+      type: object
+      properties:
+        initialized:
+          type: boolean
+          description: Whether Vault has been initialized.
+          example: true
+        sealed:
+          type: boolean
+          description: Whether Vault is sealed.
+          example: false
+        standby:
+          type: boolean
+          description: Whether this Vault node is in standby mode.
+          example: false
+        version:
+          type: string
+          description: Vault version string.
+          example: 2.0.0
+        cluster_name:
+          type: string
+          description: Name of the Vault cluster.
+          example: vault-cluster-01
+        cluster_id:
+          type: string
+          description: UUID of the Vault cluster.
+          example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+  securitySchemes:
+    vaultToken:
+      type: apiKey
+      in: header
+      name: X-Vault-Token
+      description: Vault token for authenticating API requests. Tokens can be created via login endpoints or the token auth method. The token must have appropriate policy permissions for the requested operations.
+externalDocs:
+  description: Vault KV v2 API Reference
+  url: https://developer.hashicorp.com/vault/api-docs/secret/kv/kv-v2

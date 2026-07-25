@@ -1,0 +1,220 @@
+openapi: 3.0.3
+info:
+  title: HashiCorp Vault KV Secrets Engine Auth Methods Policies API
+  description: 'The HashiCorp Vault KV (Key/Value) secrets engine API provides endpoints for reading, writing, versioning, and managing secrets stored in Vault. KV v2 supports secret versioning, metadata management, soft delete, and permanent destruction of secret versions. All paths are mounted under the KV engine mount point (default: secret/).'
+  version: '2.0'
+  contact:
+    name: HashiCorp Support
+    url: https://support.hashicorp.com
+  termsOfService: https://www.hashicorp.com/terms-of-service
+  license:
+    name: BUSL-1.1
+    url: https://github.com/hashicorp/vault/blob/main/LICENSE
+  x-generated-from: documentation
+servers:
+- url: https://vault.example.com/v1
+  description: Vault Server Instance
+security:
+- vaultToken: []
+tags:
+- name: Policies
+  description: Create, read, update, delete, and list ACL policies.
+paths:
+  /sys/policies/acl:
+    get:
+      operationId: listPolicies
+      summary: HashiCorp Vault List ACL Policies
+      description: List all ACL policies currently configured in Vault. Returns a list of policy names.
+      tags:
+      - Policies
+      responses:
+        '200':
+          description: Successfully retrieved policy list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PoliciesListResponse'
+              examples:
+                listPolicies200Example:
+                  summary: Default listPolicies 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      policies:
+                      - default
+                      - root
+                      - dev-policy
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /sys/policies/acl/{name}:
+    get:
+      operationId: readPolicy
+      summary: HashiCorp Vault Read ACL Policy
+      description: Retrieve the HCL rules for an ACL policy by name. Returns the policy document which defines path-based access rules.
+      tags:
+      - Policies
+      parameters:
+      - $ref: '#/components/parameters/PolicyName'
+      responses:
+        '200':
+          description: Successfully retrieved policy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyResponse'
+              examples:
+                readPolicy200Example:
+                  summary: Default readPolicy 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      name: dev-policy
+                      policy: path "secret/*" { capabilities = ["read", "list"] }
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+        '404':
+          description: Policy not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: writePolicy
+      summary: HashiCorp Vault Write ACL Policy
+      description: Create or update an ACL policy. Policies are written in HashiCorp Configuration Language (HCL) and define path-based access rules with capabilities such as create, read, update, delete, list, and sudo.
+      tags:
+      - Policies
+      parameters:
+      - $ref: '#/components/parameters/PolicyName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyRequest'
+            examples:
+              writePolicyRequestExample:
+                summary: Default writePolicy request
+                x-microcks-default: true
+                value:
+                  policy: path "secret/data/myapp/*" { capabilities = ["create", "read", "update", "delete", "list"] }
+      responses:
+        '204':
+          description: Policy created or updated successfully
+        '400':
+          description: Bad request - invalid policy syntax
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deletePolicy
+      summary: HashiCorp Vault Delete ACL Policy
+      description: Delete an ACL policy from Vault. Tokens associated with this policy will lose access defined by the policy.
+      tags:
+      - Policies
+      parameters:
+      - $ref: '#/components/parameters/PolicyName'
+      responses:
+        '204':
+          description: Policy deleted successfully
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  parameters:
+    PolicyName:
+      name: name
+      in: path
+      required: true
+      description: Name of the policy.
+      schema:
+        type: string
+        example: dev-policy
+  schemas:
+    PoliciesListResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            policies:
+              type: array
+              items:
+                type: string
+              description: List of policy names.
+              example:
+              - default
+              - root
+              - dev-policy
+    PolicyResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Policy name.
+              example: dev-policy
+            policy:
+              type: string
+              description: HCL policy document.
+              example: path "secret/*" { capabilities = ["read"] }
+    VaultError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
+          example:
+          - permission denied
+    PolicyRequest:
+      type: object
+      required:
+      - policy
+      properties:
+        policy:
+          type: string
+          description: HCL policy document defining path-based access rules. Capabilities include create, read, update, delete, list, and sudo.
+          example: path "secret/data/myapp/*" { capabilities = ["create", "read", "update"] }
+  securitySchemes:
+    vaultToken:
+      type: apiKey
+      in: header
+      name: X-Vault-Token
+      description: Vault token for authenticating API requests. Tokens can be created via login endpoints or the token auth method. The token must have appropriate policy permissions for the requested operations.
+externalDocs:
+  description: Vault KV v2 API Reference
+  url: https://developer.hashicorp.com/vault/api-docs/secret/kv/kv-v2

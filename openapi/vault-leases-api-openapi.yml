@@ -1,0 +1,248 @@
+openapi: 3.0.3
+info:
+  title: HashiCorp Vault KV Secrets Engine Auth Methods Leases API
+  description: 'The HashiCorp Vault KV (Key/Value) secrets engine API provides endpoints for reading, writing, versioning, and managing secrets stored in Vault. KV v2 supports secret versioning, metadata management, soft delete, and permanent destruction of secret versions. All paths are mounted under the KV engine mount point (default: secret/).'
+  version: '2.0'
+  contact:
+    name: HashiCorp Support
+    url: https://support.hashicorp.com
+  termsOfService: https://www.hashicorp.com/terms-of-service
+  license:
+    name: BUSL-1.1
+    url: https://github.com/hashicorp/vault/blob/main/LICENSE
+  x-generated-from: documentation
+servers:
+- url: https://vault.example.com/v1
+  description: Vault Server Instance
+security:
+- vaultToken: []
+tags:
+- name: Leases
+  description: Look up, renew, and revoke leases for secrets and tokens.
+paths:
+  /sys/leases/lookup:
+    put:
+      operationId: lookupLease
+      summary: HashiCorp Vault Lookup Lease
+      description: Retrieve information about a lease including its expiration time, renewable status, and associated secret path.
+      tags:
+      - Leases
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LeaseIdRequest'
+            examples:
+              lookupLeaseRequestExample:
+                summary: Default lookupLease request
+                x-microcks-default: true
+                value:
+                  lease_id: aws/creds/my-role/abc123
+      responses:
+        '200':
+          description: Successfully retrieved lease information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeaseResponse'
+              examples:
+                lookupLease200Example:
+                  summary: Default lookupLease 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: aws/creds/my-role/abc123
+                      issue_time: '2025-03-15T14:30:00Z'
+                      expire_time: '2025-03-15T15:30:00Z'
+                      last_renewal: null
+                      renewable: true
+                      ttl: 3600
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /sys/leases/renew:
+    put:
+      operationId: renewLease
+      summary: HashiCorp Vault Renew Lease
+      description: Renew a lease, extending the TTL of the associated secret or token. Only renewable leases can be renewed.
+      tags:
+      - Leases
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RenewLeaseRequest'
+            examples:
+              renewLeaseRequestExample:
+                summary: Default renewLease request
+                x-microcks-default: true
+                value:
+                  lease_id: aws/creds/my-role/abc123
+                  increment: 3600
+      responses:
+        '200':
+          description: Lease renewed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeaseRenewResponse'
+              examples:
+                renewLease200Example:
+                  summary: Default renewLease 200 response
+                  x-microcks-default: true
+                  value:
+                    lease_id: aws/creds/my-role/abc123
+                    renewable: true
+                    lease_duration: 3600
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /sys/leases/revoke:
+    put:
+      operationId: revokeLease
+      summary: HashiCorp Vault Revoke Lease
+      description: Revoke a lease and the associated secret. For dynamic secrets, this will trigger revocation of the credential in the target system.
+      tags:
+      - Leases
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LeaseIdRequest'
+            examples:
+              revokeLeaseRequestExample:
+                summary: Default revokeLease request
+                x-microcks-default: true
+                value:
+                  lease_id: aws/creds/my-role/abc123
+      responses:
+        '204':
+          description: Lease revoked successfully
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    LeaseRenewResponse:
+      type: object
+      properties:
+        lease_id:
+          type: string
+          description: Lease identifier.
+          example: aws/creds/my-role/abc123
+        renewable:
+          type: boolean
+          description: Whether the lease can be further renewed.
+          example: true
+        lease_duration:
+          type: integer
+          description: New TTL in seconds.
+          example: 3600
+    LeaseIdRequest:
+      type: object
+      required:
+      - lease_id
+      properties:
+        lease_id:
+          type: string
+          description: Unique identifier of the lease.
+          example: aws/creds/my-role/abc123def456
+    LeaseResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Lease identifier.
+              example: aws/creds/my-role/abc123
+            issue_time:
+              type: string
+              format: date-time
+              description: When the lease was issued.
+              example: '2025-03-15T14:30:00Z'
+            expire_time:
+              type: string
+              format: date-time
+              description: When the lease will expire.
+              example: '2025-03-15T15:30:00Z'
+            renewable:
+              type: boolean
+              description: Whether the lease can be renewed.
+              example: true
+            ttl:
+              type: integer
+              description: Remaining TTL in seconds.
+              example: 3600
+    VaultError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
+          example:
+          - permission denied
+    RenewLeaseRequest:
+      type: object
+      required:
+      - lease_id
+      properties:
+        lease_id:
+          type: string
+          description: Unique identifier of the lease to renew.
+          example: aws/creds/my-role/abc123def456
+        increment:
+          type: integer
+          description: Requested renewal duration in seconds. Vault may return a shorter duration based on policy limits.
+          example: 3600
+  securitySchemes:
+    vaultToken:
+      type: apiKey
+      in: header
+      name: X-Vault-Token
+      description: Vault token for authenticating API requests. Tokens can be created via login endpoints or the token auth method. The token must have appropriate policy permissions for the requested operations.
+externalDocs:
+  description: Vault KV v2 API Reference
+  url: https://developer.hashicorp.com/vault/api-docs/secret/kv/kv-v2
