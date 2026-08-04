@@ -1,0 +1,708 @@
+openapi: 3.0.3
+info:
+  title: HashiCorp Vault KV Secrets Engine API
+  description: >-
+    The HashiCorp Vault KV (Key/Value) secrets engine API provides endpoints for
+    reading, writing, versioning, and managing secrets stored in Vault. KV v2
+    supports secret versioning, metadata management, soft delete, and permanent
+    destruction of secret versions. All paths are mounted under the KV engine
+    mount point (default: secret/).
+  version: "2.0"
+  contact:
+    name: HashiCorp Support
+    url: https://support.hashicorp.com
+  termsOfService: https://www.hashicorp.com/terms-of-service
+  license:
+    name: BUSL-1.1
+    url: https://github.com/hashicorp/vault/blob/main/LICENSE
+  x-generated-from: documentation
+
+externalDocs:
+  description: Vault KV v2 API Reference
+  url: https://developer.hashicorp.com/vault/api-docs/secret/kv/kv-v2
+
+servers:
+  - url: https://vault.example.com/v1
+    description: Vault Server Instance
+
+security:
+  - vaultToken: []
+
+tags:
+  - name: Secrets Data
+    description: Read, write, patch, and delete secret data versions in the KV v2 engine.
+  - name: Secrets Metadata
+    description: Manage metadata and version history for KV v2 secrets.
+  - name: Secrets Config
+    description: Configure KV v2 engine settings such as max versions and CAS required.
+
+paths:
+  /secret/config:
+    get:
+      operationId: getKvConfig
+      summary: HashiCorp Vault Get KV Configuration
+      description: >-
+        Retrieve the current configuration for the KV v2 secrets engine including
+        maximum number of versions, CAS required setting, delete version after
+        duration, and whether the engine is enabled.
+      tags:
+        - Secrets Config
+      responses:
+        '200':
+          description: Successfully retrieved KV engine configuration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KvConfigResponse'
+              examples:
+                getKvConfig200Example:
+                  summary: Default getKvConfig 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      max_versions: 10
+                      cas_required: false
+                      delete_version_after: "0s"
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: setKvConfig
+      summary: HashiCorp Vault Set KV Configuration
+      description: >-
+        Configure backend-level settings for the KV v2 secrets engine including
+        maximum number of secret versions to keep and whether CAS (check-and-set)
+        is required for write operations.
+      tags:
+        - Secrets Config
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KvConfigRequest'
+            examples:
+              setKvConfigRequestExample:
+                summary: Default setKvConfig request
+                x-microcks-default: true
+                value:
+                  max_versions: 10
+                  cas_required: false
+      responses:
+        '204':
+          description: Configuration updated successfully
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+  /secret/data/{path}:
+    get:
+      operationId: readSecret
+      summary: HashiCorp Vault Read Secret
+      description: >-
+        Retrieve the secret data and metadata for a given path from the KV v2
+        secrets engine. Returns the latest version by default or a specific
+        version if the version parameter is specified.
+      tags:
+        - Secrets Data
+      parameters:
+        - $ref: '#/components/parameters/SecretPath'
+        - name: version
+          in: query
+          required: false
+          description: >-
+            Specifies the version to return. If not set the latest version is
+            returned.
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Successfully retrieved secret
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecretDataResponse'
+              examples:
+                readSecret200Example:
+                  summary: Default readSecret 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      data:
+                        username: "admin"
+                        password: "s3cr3t"
+                      metadata:
+                        created_time: "2025-03-15T14:30:00Z"
+                        deletion_time: ""
+                        destroyed: false
+                        version: 1
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+        '404':
+          description: Secret not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: writeSecret
+      summary: HashiCorp Vault Write Secret
+      description: >-
+        Create or update a secret at the given path in the KV v2 secrets engine.
+        Optionally supports check-and-set (CAS) operation to prevent accidental
+        overwrites. Each write creates a new version.
+      tags:
+        - Secrets Data
+      parameters:
+        - $ref: '#/components/parameters/SecretPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SecretDataRequest'
+            examples:
+              writeSecretRequestExample:
+                summary: Default writeSecret request
+                x-microcks-default: true
+                value:
+                  data:
+                    username: "admin"
+                    password: "s3cr3t"
+      responses:
+        '200':
+          description: Secret written successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecretWriteResponse'
+              examples:
+                writeSecret200Example:
+                  summary: Default writeSecret 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      created_time: "2025-03-15T14:30:00Z"
+                      deletion_time: ""
+                      destroyed: false
+                      version: 2
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteLatestSecretVersion
+      summary: HashiCorp Vault Delete Latest Secret Version
+      description: >-
+        Soft delete the latest version of a secret at the given path. The secret
+        data is not permanently removed and can be undeleted. Use the destroy
+        endpoint to permanently remove secret data.
+      tags:
+        - Secrets Data
+      parameters:
+        - $ref: '#/components/parameters/SecretPath'
+      responses:
+        '204':
+          description: Secret version soft deleted successfully
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+        '404':
+          description: Secret not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+  /secret/metadata/{path}:
+    get:
+      operationId: readSecretMetadata
+      summary: HashiCorp Vault Read Secret Metadata
+      description: >-
+        Retrieve metadata and version history for a secret at the given path.
+        Returns all version timestamps, current version number, max versions
+        setting, CAS required status, and custom metadata.
+      tags:
+        - Secrets Metadata
+      parameters:
+        - $ref: '#/components/parameters/SecretPath'
+      responses:
+        '200':
+          description: Successfully retrieved secret metadata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecretMetadataResponse'
+              examples:
+                readSecretMetadata200Example:
+                  summary: Default readSecretMetadata 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      current_version: 2
+                      max_versions: 10
+                      oldest_version: 1
+                      created_time: "2025-03-15T14:30:00Z"
+                      updated_time: "2025-03-16T10:00:00Z"
+                      versions:
+                        "1":
+                          created_time: "2025-03-15T14:30:00Z"
+                          deletion_time: ""
+                          destroyed: false
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+        '404':
+          description: Secret not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: writeSecretMetadata
+      summary: HashiCorp Vault Write Secret Metadata
+      description: >-
+        Create or update metadata for a secret including max versions, CAS
+        required setting, delete version after duration, and custom metadata
+        key-value pairs.
+      tags:
+        - Secrets Metadata
+      parameters:
+        - $ref: '#/components/parameters/SecretPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SecretMetadataRequest'
+            examples:
+              writeSecretMetadataRequestExample:
+                summary: Default writeSecretMetadata request
+                x-microcks-default: true
+                value:
+                  max_versions: 10
+                  cas_required: false
+                  custom_metadata:
+                    owner: "platform-team"
+                    environment: "production"
+      responses:
+        '204':
+          description: Metadata updated successfully
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteSecretMetadata
+      summary: HashiCorp Vault Delete Secret Metadata
+      description: >-
+        Permanently delete all metadata and versions for a secret at the given
+        path. This operation is irreversible and removes all version history.
+      tags:
+        - Secrets Metadata
+      parameters:
+        - $ref: '#/components/parameters/SecretPath'
+      responses:
+        '204':
+          description: Metadata and all versions permanently deleted
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+  /secret/delete/{path}:
+    post:
+      operationId: deleteSecretVersions
+      summary: HashiCorp Vault Delete Secret Versions
+      description: >-
+        Soft delete one or more specified versions of a secret. The deleted
+        versions can be recovered using the undelete endpoint. The key data is
+        not permanently removed.
+      tags:
+        - Secrets Data
+      parameters:
+        - $ref: '#/components/parameters/SecretPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VersionsRequest'
+            examples:
+              deleteSecretVersionsRequestExample:
+                summary: Default deleteSecretVersions request
+                x-microcks-default: true
+                value:
+                  versions: [1, 2]
+      responses:
+        '204':
+          description: Secret versions soft deleted successfully
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+  /secret/undelete/{path}:
+    post:
+      operationId: undeleteSecretVersions
+      summary: HashiCorp Vault Undelete Secret Versions
+      description: >-
+        Restore one or more previously soft-deleted versions of a secret.
+        Versions that have been permanently destroyed cannot be recovered.
+      tags:
+        - Secrets Data
+      parameters:
+        - $ref: '#/components/parameters/SecretPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VersionsRequest'
+            examples:
+              undeleteSecretVersionsRequestExample:
+                summary: Default undeleteSecretVersions request
+                x-microcks-default: true
+                value:
+                  versions: [1, 2]
+      responses:
+        '204':
+          description: Secret versions restored successfully
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+  /secret/destroy/{path}:
+    put:
+      operationId: destroySecretVersions
+      summary: HashiCorp Vault Destroy Secret Versions
+      description: >-
+        Permanently remove the data for one or more versions of a secret.
+        Unlike soft delete, this operation is irreversible and the data cannot
+        be recovered.
+      tags:
+        - Secrets Data
+      parameters:
+        - $ref: '#/components/parameters/SecretPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VersionsRequest'
+            examples:
+              destroySecretVersionsRequestExample:
+                summary: Default destroySecretVersions request
+                x-microcks-default: true
+                value:
+                  versions: [1, 2]
+      responses:
+        '204':
+          description: Secret versions permanently destroyed
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+components:
+  securitySchemes:
+    vaultToken:
+      type: apiKey
+      in: header
+      name: X-Vault-Token
+      description: >-
+        Vault token for authenticating API requests. Tokens can be created via
+        login endpoints or the token auth method. The token must have appropriate
+        policy permissions for the requested operations.
+
+  parameters:
+    SecretPath:
+      name: path
+      in: path
+      required: true
+      description: >-
+        Path to the secret in the KV v2 store. Use forward slashes to organize
+        secrets in a hierarchy. Example: myapp/production/db.
+      schema:
+        type: string
+        example: myapp/production/db
+
+  schemas:
+    KvConfigRequest:
+      type: object
+      properties:
+        max_versions:
+          type: integer
+          minimum: 0
+          description: >-
+            Maximum number of versions to keep per secret. Older versions are
+            automatically deleted when this limit is exceeded. Set to 0 for
+            unlimited versions.
+          example: 10
+        cas_required:
+          type: boolean
+          description: >-
+            When true, all write operations require check-and-set (CAS) parameter
+            to prevent accidental overwrites.
+          example: false
+        delete_version_after:
+          type: string
+          description: >-
+            Duration after which a secret version is automatically soft-deleted.
+            Defaults to "0s" (never). Format is a Go duration string.
+          example: "0s"
+
+    KvConfigResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            max_versions:
+              type: integer
+              example: 10
+            cas_required:
+              type: boolean
+              example: false
+            delete_version_after:
+              type: string
+              example: "0s"
+
+    SecretDataRequest:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          description: >-
+            Key-value pairs to store as the secret. Values can be strings,
+            numbers, or nested objects.
+          additionalProperties: true
+        options:
+          type: object
+          properties:
+            cas:
+              type: integer
+              description: >-
+                Check-and-set value. If set, the write will only succeed if
+                the current version matches this value. Set to 0 to write only
+                if the key does not exist.
+
+    SecretWriteResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/SecretVersionMetadata'
+
+    SecretDataResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            data:
+              type: object
+              description: The secret key-value pairs.
+              additionalProperties: true
+            metadata:
+              $ref: '#/components/schemas/SecretVersionMetadata'
+
+    SecretVersionMetadata:
+      type: object
+      properties:
+        created_time:
+          type: string
+          format: date-time
+          description: Time when this secret version was created.
+          example: "2025-03-15T14:30:00Z"
+        deletion_time:
+          type: string
+          description: >-
+            Time when this version was or will be deleted. Empty string if not
+            scheduled for deletion.
+          example: ""
+        destroyed:
+          type: boolean
+          description: Whether this version has been permanently destroyed.
+          example: false
+        version:
+          type: integer
+          description: The version number of this secret.
+          example: 1
+
+    SecretMetadataRequest:
+      type: object
+      properties:
+        max_versions:
+          type: integer
+          minimum: 0
+          description: Maximum number of versions to keep for this specific secret.
+          example: 10
+        cas_required:
+          type: boolean
+          description: When true, write operations require CAS parameter.
+          example: false
+        delete_version_after:
+          type: string
+          description: Duration after which versions are automatically soft-deleted.
+          example: "0s"
+        custom_metadata:
+          type: object
+          description: User-provided key-value metadata stored alongside the secret.
+          additionalProperties:
+            type: string
+          example:
+            owner: "platform-team"
+            environment: "production"
+
+    SecretMetadataResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            current_version:
+              type: integer
+              description: The current version number of the secret.
+              example: 2
+            max_versions:
+              type: integer
+              description: Maximum number of versions retained.
+              example: 10
+            oldest_version:
+              type: integer
+              description: The oldest version number available.
+              example: 1
+            created_time:
+              type: string
+              format: date-time
+              description: Time when the secret was first created.
+              example: "2025-03-15T14:30:00Z"
+            updated_time:
+              type: string
+              format: date-time
+              description: Time when the secret was last updated.
+              example: "2025-03-16T10:00:00Z"
+            cas_required:
+              type: boolean
+              example: false
+            versions:
+              type: object
+              description: Map of version number to version metadata.
+              additionalProperties:
+                $ref: '#/components/schemas/SecretVersionMetadata'
+            custom_metadata:
+              type: object
+              additionalProperties:
+                type: string
+
+    VersionsRequest:
+      type: object
+      required:
+        - versions
+      properties:
+        versions:
+          type: array
+          items:
+            type: integer
+          description: List of version numbers to operate on.
+          example: [1, 2, 3]
+
+    VaultError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
+          example:
+            - "permission denied"

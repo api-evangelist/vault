@@ -1,0 +1,846 @@
+openapi: 3.0.3
+info:
+  title: HashiCorp Vault System Backend API
+  description: >-
+    The Vault System Backend API provides access to system-level operations
+    including authentication method management, secrets engine mounts, policy
+    management, token operations, and lease management. All sys/ endpoints
+    are available at /v1/sys/ and require appropriate capabilities in Vault
+    policies.
+  version: "2.0"
+  contact:
+    name: HashiCorp Support
+    url: https://support.hashicorp.com
+  termsOfService: https://www.hashicorp.com/terms-of-service
+  license:
+    name: BUSL-1.1
+    url: https://github.com/hashicorp/vault/blob/main/LICENSE
+  x-generated-from: documentation
+
+externalDocs:
+  description: Vault HTTP API Reference
+  url: https://developer.hashicorp.com/vault/api-docs
+
+servers:
+  - url: https://vault.example.com/v1
+    description: Vault Server Instance
+
+security:
+  - vaultToken: []
+
+tags:
+  - name: Auth Methods
+    description: Enable, disable, list, and configure authentication methods.
+  - name: Secrets Engines
+    description: Mount, unmount, list, and configure secrets engines.
+  - name: Policies
+    description: Create, read, update, delete, and list ACL policies.
+  - name: Tokens
+    description: Create, renew, lookup, and revoke tokens.
+  - name: Leases
+    description: Look up, renew, and revoke leases for secrets and tokens.
+  - name: Health
+    description: Check Vault health and initialization status.
+
+paths:
+  /sys/health:
+    get:
+      operationId: getHealth
+      summary: HashiCorp Vault Get Health Status
+      description: >-
+        Returns the health status of Vault. Returns HTTP 200 if Vault is
+        initialized and unsealed, 429 if standby, 472 if recovery mode, and
+        503 if sealed or uninitialized.
+      tags:
+        - Health
+      security: []
+      responses:
+        '200':
+          description: Vault is initialized and active (leader)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+              examples:
+                getHealth200Example:
+                  summary: Default getHealth 200 response
+                  x-microcks-default: true
+                  value:
+                    initialized: true
+                    sealed: false
+                    standby: false
+                    version: "2.0.0"
+                    cluster_name: "vault-cluster-01"
+        '429':
+          description: Vault is standby
+        '503':
+          description: Vault is sealed or uninitialized
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+  /sys/auth:
+    get:
+      operationId: listAuthMethods
+      summary: HashiCorp Vault List Auth Methods
+      description: >-
+        List all currently enabled authentication methods. Returns configuration
+        details for each auth method including type, description, and tuning
+        settings.
+      tags:
+        - Auth Methods
+      responses:
+        '200':
+          description: Successfully retrieved auth methods
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthMethodsResponse'
+              examples:
+                listAuthMethods200Example:
+                  summary: Default listAuthMethods 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      token/:
+                        type: token
+                        description: "token based credentials"
+                        accessor: "abc123"
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+  /sys/auth/{path}:
+    post:
+      operationId: enableAuthMethod
+      summary: HashiCorp Vault Enable Auth Method
+      description: >-
+        Enable a new auth method at the specified path. Requires sudo capability.
+        Supported types include approle, aws, azure, github, jwt, kubernetes,
+        ldap, oidc, okta, radius, token, and userpass.
+      tags:
+        - Auth Methods
+      parameters:
+        - $ref: '#/components/parameters/MountPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnableAuthMethodRequest'
+            examples:
+              enableAuthMethodRequestExample:
+                summary: Default enableAuthMethod request
+                x-microcks-default: true
+                value:
+                  type: "approle"
+                  description: "AppRole auth method for service accounts"
+      responses:
+        '204':
+          description: Auth method enabled successfully
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: disableAuthMethod
+      summary: HashiCorp Vault Disable Auth Method
+      description: >-
+        Disable the auth method at the specified path. Any tokens associated
+        with this auth method will be revoked. Requires sudo capability.
+      tags:
+        - Auth Methods
+      parameters:
+        - $ref: '#/components/parameters/MountPath'
+      responses:
+        '204':
+          description: Auth method disabled successfully
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+  /sys/mounts:
+    get:
+      operationId: listSecretsMounts
+      summary: HashiCorp Vault List Secrets Engine Mounts
+      description: >-
+        List all mounted secrets engines with their configuration, accessor,
+        and options. Returns a map of mount path to engine configuration.
+      tags:
+        - Secrets Engines
+      responses:
+        '200':
+          description: Successfully retrieved secrets engine mounts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MountsResponse'
+              examples:
+                listSecretsMounts200Example:
+                  summary: Default listSecretsMounts 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      secret/:
+                        type: kv
+                        description: "Key-Value store"
+                        options:
+                          version: "2"
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+  /sys/mounts/{path}:
+    post:
+      operationId: enableSecretsEngine
+      summary: HashiCorp Vault Enable Secrets Engine
+      description: >-
+        Mount a new secrets engine at the specified path. Supported types include
+        aws, azure, consul, database, gcp, kv, nomad, pki, rabbitmq, ssh, totp,
+        transit, and more.
+      tags:
+        - Secrets Engines
+      parameters:
+        - $ref: '#/components/parameters/MountPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnableMountRequest'
+            examples:
+              enableSecretsEngineRequestExample:
+                summary: Default enableSecretsEngine request
+                x-microcks-default: true
+                value:
+                  type: "kv"
+                  description: "Application secrets"
+                  options:
+                    version: "2"
+      responses:
+        '204':
+          description: Secrets engine enabled successfully
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: disableSecretsEngine
+      summary: HashiCorp Vault Disable Secrets Engine
+      description: >-
+        Unmount a secrets engine. All secrets stored in this engine will be
+        revoked. This operation is irreversible.
+      tags:
+        - Secrets Engines
+      parameters:
+        - $ref: '#/components/parameters/MountPath'
+      responses:
+        '204':
+          description: Secrets engine unmounted successfully
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+  /sys/policies/acl:
+    get:
+      operationId: listPolicies
+      summary: HashiCorp Vault List ACL Policies
+      description: >-
+        List all ACL policies currently configured in Vault. Returns a list
+        of policy names.
+      tags:
+        - Policies
+      responses:
+        '200':
+          description: Successfully retrieved policy list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PoliciesListResponse'
+              examples:
+                listPolicies200Example:
+                  summary: Default listPolicies 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      policies:
+                        - default
+                        - root
+                        - dev-policy
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+  /sys/policies/acl/{name}:
+    get:
+      operationId: readPolicy
+      summary: HashiCorp Vault Read ACL Policy
+      description: >-
+        Retrieve the HCL rules for an ACL policy by name. Returns the policy
+        document which defines path-based access rules.
+      tags:
+        - Policies
+      parameters:
+        - $ref: '#/components/parameters/PolicyName'
+      responses:
+        '200':
+          description: Successfully retrieved policy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyResponse'
+              examples:
+                readPolicy200Example:
+                  summary: Default readPolicy 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      name: "dev-policy"
+                      policy: "path \"secret/*\" { capabilities = [\"read\", \"list\"] }"
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+        '404':
+          description: Policy not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    post:
+      operationId: writePolicy
+      summary: HashiCorp Vault Write ACL Policy
+      description: >-
+        Create or update an ACL policy. Policies are written in HashiCorp
+        Configuration Language (HCL) and define path-based access rules with
+        capabilities such as create, read, update, delete, list, and sudo.
+      tags:
+        - Policies
+      parameters:
+        - $ref: '#/components/parameters/PolicyName'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PolicyRequest'
+            examples:
+              writePolicyRequestExample:
+                summary: Default writePolicy request
+                x-microcks-default: true
+                value:
+                  policy: "path \"secret/data/myapp/*\" { capabilities = [\"create\", \"read\", \"update\", \"delete\", \"list\"] }"
+      responses:
+        '204':
+          description: Policy created or updated successfully
+        '400':
+          description: Bad request - invalid policy syntax
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deletePolicy
+      summary: HashiCorp Vault Delete ACL Policy
+      description: >-
+        Delete an ACL policy from Vault. Tokens associated with this policy
+        will lose access defined by the policy.
+      tags:
+        - Policies
+      parameters:
+        - $ref: '#/components/parameters/PolicyName'
+      responses:
+        '204':
+          description: Policy deleted successfully
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+  /sys/leases/lookup:
+    put:
+      operationId: lookupLease
+      summary: HashiCorp Vault Lookup Lease
+      description: >-
+        Retrieve information about a lease including its expiration time,
+        renewable status, and associated secret path.
+      tags:
+        - Leases
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LeaseIdRequest'
+            examples:
+              lookupLeaseRequestExample:
+                summary: Default lookupLease request
+                x-microcks-default: true
+                value:
+                  lease_id: "aws/creds/my-role/abc123"
+      responses:
+        '200':
+          description: Successfully retrieved lease information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeaseResponse'
+              examples:
+                lookupLease200Example:
+                  summary: Default lookupLease 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                      id: "aws/creds/my-role/abc123"
+                      issue_time: "2025-03-15T14:30:00Z"
+                      expire_time: "2025-03-15T15:30:00Z"
+                      last_renewal: null
+                      renewable: true
+                      ttl: 3600
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+  /sys/leases/renew:
+    put:
+      operationId: renewLease
+      summary: HashiCorp Vault Renew Lease
+      description: >-
+        Renew a lease, extending the TTL of the associated secret or token.
+        Only renewable leases can be renewed.
+      tags:
+        - Leases
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RenewLeaseRequest'
+            examples:
+              renewLeaseRequestExample:
+                summary: Default renewLease request
+                x-microcks-default: true
+                value:
+                  lease_id: "aws/creds/my-role/abc123"
+                  increment: 3600
+      responses:
+        '200':
+          description: Lease renewed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeaseRenewResponse'
+              examples:
+                renewLease200Example:
+                  summary: Default renewLease 200 response
+                  x-microcks-default: true
+                  value:
+                    lease_id: "aws/creds/my-role/abc123"
+                    renewable: true
+                    lease_duration: 3600
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+  /sys/leases/revoke:
+    put:
+      operationId: revokeLease
+      summary: HashiCorp Vault Revoke Lease
+      description: >-
+        Revoke a lease and the associated secret. For dynamic secrets, this
+        will trigger revocation of the credential in the target system.
+      tags:
+        - Leases
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LeaseIdRequest'
+            examples:
+              revokeLeaseRequestExample:
+                summary: Default revokeLease request
+                x-microcks-default: true
+                value:
+                  lease_id: "aws/creds/my-role/abc123"
+      responses:
+        '204':
+          description: Lease revoked successfully
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+        '403':
+          description: Permission denied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VaultError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+components:
+  securitySchemes:
+    vaultToken:
+      type: apiKey
+      in: header
+      name: X-Vault-Token
+      description: >-
+        Vault service or batch token for authenticating API requests. Tokens
+        must have appropriate policy capabilities for the requested operations.
+
+  parameters:
+    MountPath:
+      name: path
+      in: path
+      required: true
+      description: >-
+        Mount path for the auth method or secrets engine. Must not contain
+        slashes at the beginning or end.
+      schema:
+        type: string
+        example: approle
+    PolicyName:
+      name: name
+      in: path
+      required: true
+      description: Name of the policy.
+      schema:
+        type: string
+        example: dev-policy
+
+  schemas:
+    HealthResponse:
+      type: object
+      properties:
+        initialized:
+          type: boolean
+          description: Whether Vault has been initialized.
+          example: true
+        sealed:
+          type: boolean
+          description: Whether Vault is sealed.
+          example: false
+        standby:
+          type: boolean
+          description: Whether this Vault node is in standby mode.
+          example: false
+        version:
+          type: string
+          description: Vault version string.
+          example: "2.0.0"
+        cluster_name:
+          type: string
+          description: Name of the Vault cluster.
+          example: "vault-cluster-01"
+        cluster_id:
+          type: string
+          description: UUID of the Vault cluster.
+          example: "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+
+    AuthMethodsResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          description: Map of mount path to auth method configuration.
+          additionalProperties:
+            $ref: '#/components/schemas/AuthMethodConfig'
+
+    AuthMethodConfig:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Auth method type.
+          example: approle
+        description:
+          type: string
+          description: Description of the auth method.
+          example: "AppRole auth method"
+        accessor:
+          type: string
+          description: Accessor for the auth method.
+          example: "auth_approle_abc123"
+
+    EnableAuthMethodRequest:
+      type: object
+      required:
+        - type
+      properties:
+        type:
+          type: string
+          description: >-
+            Type of auth method to enable. Supported types include approle,
+            aws, azure, github, jwt, kubernetes, ldap, oidc, token, userpass.
+          example: approle
+        description:
+          type: string
+          description: Human-friendly description of the auth method.
+          example: "AppRole auth for microservices"
+
+    MountsResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          description: Map of mount path to secrets engine configuration.
+          additionalProperties:
+            $ref: '#/components/schemas/MountConfig'
+
+    MountConfig:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Secrets engine type.
+          example: kv
+        description:
+          type: string
+          description: Description of the mount.
+          example: "Key-Value store"
+        accessor:
+          type: string
+          description: Mount accessor.
+          example: "kv_abc123"
+        options:
+          type: object
+          additionalProperties:
+            type: string
+
+    EnableMountRequest:
+      type: object
+      required:
+        - type
+      properties:
+        type:
+          type: string
+          description: Type of secrets engine to mount.
+          example: kv
+        description:
+          type: string
+          description: Human-friendly description.
+          example: "Application secrets"
+        options:
+          type: object
+          additionalProperties:
+            type: string
+
+    PoliciesListResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            policies:
+              type: array
+              items:
+                type: string
+              description: List of policy names.
+              example: ["default", "root", "dev-policy"]
+
+    PolicyResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Policy name.
+              example: dev-policy
+            policy:
+              type: string
+              description: HCL policy document.
+              example: "path \"secret/*\" { capabilities = [\"read\"] }"
+
+    PolicyRequest:
+      type: object
+      required:
+        - policy
+      properties:
+        policy:
+          type: string
+          description: >-
+            HCL policy document defining path-based access rules. Capabilities
+            include create, read, update, delete, list, and sudo.
+          example: "path \"secret/data/myapp/*\" { capabilities = [\"create\", \"read\", \"update\"] }"
+
+    LeaseIdRequest:
+      type: object
+      required:
+        - lease_id
+      properties:
+        lease_id:
+          type: string
+          description: Unique identifier of the lease.
+          example: "aws/creds/my-role/abc123def456"
+
+    RenewLeaseRequest:
+      type: object
+      required:
+        - lease_id
+      properties:
+        lease_id:
+          type: string
+          description: Unique identifier of the lease to renew.
+          example: "aws/creds/my-role/abc123def456"
+        increment:
+          type: integer
+          description: >-
+            Requested renewal duration in seconds. Vault may return a shorter
+            duration based on policy limits.
+          example: 3600
+
+    LeaseResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Lease identifier.
+              example: "aws/creds/my-role/abc123"
+            issue_time:
+              type: string
+              format: date-time
+              description: When the lease was issued.
+              example: "2025-03-15T14:30:00Z"
+            expire_time:
+              type: string
+              format: date-time
+              description: When the lease will expire.
+              example: "2025-03-15T15:30:00Z"
+            renewable:
+              type: boolean
+              description: Whether the lease can be renewed.
+              example: true
+            ttl:
+              type: integer
+              description: Remaining TTL in seconds.
+              example: 3600
+
+    LeaseRenewResponse:
+      type: object
+      properties:
+        lease_id:
+          type: string
+          description: Lease identifier.
+          example: "aws/creds/my-role/abc123"
+        renewable:
+          type: boolean
+          description: Whether the lease can be further renewed.
+          example: true
+        lease_duration:
+          type: integer
+          description: New TTL in seconds.
+          example: 3600
+
+    VaultError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
+          example: ["permission denied"]

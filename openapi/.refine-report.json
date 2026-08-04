@@ -1,0 +1,28 @@
+{
+  "provider": "vault",
+  "sources": [
+    "vault-auth-methods-api-openapi.yml",
+    "vault-health-api-openapi.yml",
+    "vault-leases-api-openapi.yml",
+    "vault-policies-api-openapi.yml",
+    "vault-secrets-config-api-openapi.yml",
+    "vault-secrets-data-api-openapi.yml",
+    "vault-secrets-engines-api-openapi.yml",
+    "vault-secrets-metadata-api-openapi.yml"
+  ],
+  "outputs": [
+    "vault-auth-methods-api-openapi.yml",
+    "vault-health-api-openapi.yml",
+    "vault-leases-api-openapi.yml",
+    "vault-policies-api-openapi.yml",
+    "vault-secrets-config-api-openapi.yml",
+    "vault-secrets-data-api-openapi.yml",
+    "vault-secrets-engines-api-openapi.yml",
+    "vault-secrets-metadata-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

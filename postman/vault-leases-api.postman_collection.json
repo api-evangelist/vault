@@ -1,0 +1,739 @@
+{
+  "info": {
+    "_postman_id": "3f39dc6a-2341-4c2c-86f7-9090dc09f73a",
+    "name": "HashiCorp Vault KV Secrets Engine Auth Methods Leases API",
+    "description": "The HashiCorp Vault KV (Key/Value) secrets engine API provides endpoints for reading, writing, versioning, and managing secrets stored in Vault. KV v2 supports secret versioning, metadata management, soft delete, and permanent destruction of secret versions. All paths are mounted under the KV engine mount point (default: secret/).\n\nContact Support:\n Name: HashiCorp Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:26:37.000Z",
+    "updatedAt": "2026-07-28T03:26:38.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-3f39dc6a-2341-4c2c-86f7-9090dc09f73a"
+  },
+  "item": [
+    {
+      "name": "sys",
+      "item": [
+        {
+          "name": "leases",
+          "item": [
+            {
+              "name": "lookup",
+              "item": [
+                {
+                  "name": "HashiCorp Vault Lookup Lease",
+                  "id": "15303074-1f31-46c3-aec6-a53345fb3426",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"lease_id\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/sys/leases/lookup",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "sys",
+                        "leases",
+                        "lookup"
+                      ]
+                    },
+                    "description": "Retrieve information about a lease including its expiration time, renewable status, and associated secret path."
+                  },
+                  "response": [
+                    {
+                      "id": "081aa62d-e063-4dff-a5dc-ada3d83491ca",
+                      "name": "Successfully retrieved lease information",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-Vault-Token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"lease_id\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/sys/leases/lookup",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "sys",
+                            "leases",
+                            "lookup"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"data\": {\n    \"id\": \"<string>\",\n    \"issue_time\": \"<dateTime>\",\n    \"expire_time\": \"<dateTime>\",\n    \"renewable\": \"<boolean>\",\n    \"ttl\": \"<integer>\"\n  }\n}",
+                      "createdAt": "2026-07-28T03:26:38.000Z",
+                      "updatedAt": "2026-07-28T03:26:38.000Z",
+                      "uid": "35240-081aa62d-e063-4dff-a5dc-ada3d83491ca"
+                    },
+                    {
+                      "id": "cf3ece86-d221-4ef4-8c7d-259cafa4b02b",
+                      "name": "Bad request",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-Vault-Token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"lease_id\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/sys/leases/lookup",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "sys",
+                            "leases",
+                            "lookup"
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "createdAt": "2026-07-28T03:26:38.000Z",
+                      "updatedAt": "2026-07-28T03:26:38.000Z",
+                      "uid": "35240-cf3ece86-d221-4ef4-8c7d-259cafa4b02b"
+                    },
+                    {
+                      "id": "c906f676-d081-437e-8887-d1f3307965df",
+                      "name": "Permission denied",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-Vault-Token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"lease_id\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/sys/leases/lookup",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "sys",
+                            "leases",
+                            "lookup"
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "createdAt": "2026-07-28T03:26:38.000Z",
+                      "updatedAt": "2026-07-28T03:26:38.000Z",
+                      "uid": "35240-c906f676-d081-437e-8887-d1f3307965df"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:26:38.000Z",
+                  "updatedAt": "2026-07-28T03:26:38.000Z",
+                  "uid": "35240-15303074-1f31-46c3-aec6-a53345fb3426"
+                }
+              ],
+              "id": "a74dae78-5753-468d-9eaf-0c9855c24daf",
+              "createdAt": "2026-07-28T03:26:38.000Z",
+              "updatedAt": "2026-07-28T03:26:38.000Z",
+              "uid": "35240-a74dae78-5753-468d-9eaf-0c9855c24daf"
+            },
+            {
+              "name": "renew",
+              "item": [
+                {
+                  "name": "HashiCorp Vault Renew Lease",
+                  "id": "d57fd891-edfa-49f4-86e7-0eece6f0d2a9",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"lease_id\": \"<string>\",\n  \"increment\": \"<integer>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/sys/leases/renew",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "sys",
+                        "leases",
+                        "renew"
+                      ]
+                    },
+                    "description": "Renew a lease, extending the TTL of the associated secret or token. Only renewable leases can be renewed."
+                  },
+                  "response": [
+                    {
+                      "id": "092c7c97-431e-478e-821a-3056501feffe",
+                      "name": "Lease renewed successfully",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-Vault-Token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"lease_id\": \"<string>\",\n  \"increment\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/sys/leases/renew",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "sys",
+                            "leases",
+                            "renew"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"lease_id\": \"<string>\",\n  \"renewable\": \"<boolean>\",\n  \"lease_duration\": \"<integer>\"\n}",
+                      "createdAt": "2026-07-28T03:26:38.000Z",
+                      "updatedAt": "2026-07-28T03:26:38.000Z",
+                      "uid": "35240-092c7c97-431e-478e-821a-3056501feffe"
+                    },
+                    {
+                      "id": "f51900ac-d3f3-4f80-8471-7da091f8bbdd",
+                      "name": "Bad request",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-Vault-Token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"lease_id\": \"<string>\",\n  \"increment\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/sys/leases/renew",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "sys",
+                            "leases",
+                            "renew"
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "createdAt": "2026-07-28T03:26:38.000Z",
+                      "updatedAt": "2026-07-28T03:26:38.000Z",
+                      "uid": "35240-f51900ac-d3f3-4f80-8471-7da091f8bbdd"
+                    },
+                    {
+                      "id": "03957542-1c40-4b49-82e5-c3460fb654de",
+                      "name": "Permission denied",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-Vault-Token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"lease_id\": \"<string>\",\n  \"increment\": \"<integer>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/sys/leases/renew",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "sys",
+                            "leases",
+                            "renew"
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "createdAt": "2026-07-28T03:26:38.000Z",
+                      "updatedAt": "2026-07-28T03:26:38.000Z",
+                      "uid": "35240-03957542-1c40-4b49-82e5-c3460fb654de"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:26:38.000Z",
+                  "updatedAt": "2026-07-28T03:26:38.000Z",
+                  "uid": "35240-d57fd891-edfa-49f4-86e7-0eece6f0d2a9"
+                }
+              ],
+              "id": "e86c74e6-2d88-467e-bb67-0d8a549f69f2",
+              "createdAt": "2026-07-28T03:26:38.000Z",
+              "updatedAt": "2026-07-28T03:26:38.000Z",
+              "uid": "35240-e86c74e6-2d88-467e-bb67-0d8a549f69f2"
+            },
+            {
+              "name": "revoke",
+              "item": [
+                {
+                  "name": "HashiCorp Vault Revoke Lease",
+                  "id": "86072746-5be3-48e9-b1f9-aea9b92e7b92",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"lease_id\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/sys/leases/revoke",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "sys",
+                        "leases",
+                        "revoke"
+                      ]
+                    },
+                    "description": "Revoke a lease and the associated secret. For dynamic secrets, this will trigger revocation of the credential in the target system."
+                  },
+                  "response": [
+                    {
+                      "id": "97d21e53-f2bc-4eb1-aa2b-885d0197c385",
+                      "name": "Lease revoked successfully",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-Vault-Token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"lease_id\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/sys/leases/revoke",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "sys",
+                            "leases",
+                            "revoke"
+                          ]
+                        }
+                      },
+                      "status": "No Content",
+                      "code": 204,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T03:26:38.000Z",
+                      "updatedAt": "2026-07-28T03:26:38.000Z",
+                      "uid": "35240-97d21e53-f2bc-4eb1-aa2b-885d0197c385"
+                    },
+                    {
+                      "id": "58398455-96f0-4589-a923-0275c5558053",
+                      "name": "Bad request",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-Vault-Token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"lease_id\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/sys/leases/revoke",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "sys",
+                            "leases",
+                            "revoke"
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "createdAt": "2026-07-28T03:26:38.000Z",
+                      "updatedAt": "2026-07-28T03:26:38.000Z",
+                      "uid": "35240-58398455-96f0-4589-a923-0275c5558053"
+                    },
+                    {
+                      "id": "becdbca6-5695-4cf9-acee-3df1c636988d",
+                      "name": "Permission denied",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-Vault-Token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"lease_id\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/sys/leases/revoke",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "sys",
+                            "leases",
+                            "revoke"
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "createdAt": "2026-07-28T03:26:38.000Z",
+                      "updatedAt": "2026-07-28T03:26:38.000Z",
+                      "uid": "35240-becdbca6-5695-4cf9-acee-3df1c636988d"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:26:38.000Z",
+                  "updatedAt": "2026-07-28T03:26:38.000Z",
+                  "uid": "35240-86072746-5be3-48e9-b1f9-aea9b92e7b92"
+                }
+              ],
+              "id": "0f1c8cdf-058c-47ca-944a-420119141b80",
+              "createdAt": "2026-07-28T03:26:38.000Z",
+              "updatedAt": "2026-07-28T03:26:38.000Z",
+              "uid": "35240-0f1c8cdf-058c-47ca-944a-420119141b80"
+            }
+          ],
+          "id": "fb45f426-ba28-4923-9d75-60356ab6f045",
+          "createdAt": "2026-07-28T03:26:38.000Z",
+          "updatedAt": "2026-07-28T03:26:38.000Z",
+          "uid": "35240-fb45f426-ba28-4923-9d75-60356ab6f045"
+        }
+      ],
+      "id": "0c665618-90df-4eae-b3be-63492b009304",
+      "createdAt": "2026-07-28T03:26:38.000Z",
+      "updatedAt": "2026-07-28T03:26:38.000Z",
+      "uid": "35240-0c665618-90df-4eae-b3be-63492b009304"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Vault-Token",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://vault.example.com/v1"
+    }
+  ]
+}

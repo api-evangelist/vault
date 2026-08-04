@@ -1,0 +1,761 @@
+{
+  "info": {
+    "_postman_id": "f9fcda04-774c-4a5b-96f8-c85d31193624",
+    "name": "HashiCorp Vault KV Secrets Engine Auth Methods Policies API",
+    "description": "The HashiCorp Vault KV (Key/Value) secrets engine API provides endpoints for reading, writing, versioning, and managing secrets stored in Vault. KV v2 supports secret versioning, metadata management, soft delete, and permanent destruction of secret versions. All paths are mounted under the KV engine mount point (default: secret/).\n\nContact Support:\n Name: HashiCorp Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:26:38.000Z",
+    "updatedAt": "2026-07-28T03:26:39.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-f9fcda04-774c-4a5b-96f8-c85d31193624"
+  },
+  "item": [
+    {
+      "name": "sys",
+      "item": [
+        {
+          "name": "policies",
+          "item": [
+            {
+              "name": "acl",
+              "item": [
+                {
+                  "name": "{name}",
+                  "item": [
+                    {
+                      "name": "HashiCorp Vault Read ACL Policy",
+                      "id": "298472c0-e5d1-4d61-88b4-cc8649982e34",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/sys/policies/acl/:name",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "sys",
+                            "policies",
+                            "acl",
+                            ":name"
+                          ],
+                          "variable": [
+                            {
+                              "id": "ce4fe3f6-29ac-4c04-965b-044cca2a6e19",
+                              "key": "name",
+                              "value": "<string>",
+                              "description": "(Required) Name of the policy."
+                            }
+                          ]
+                        },
+                        "description": "Retrieve the HCL rules for an ACL policy by name. Returns the policy document which defines path-based access rules."
+                      },
+                      "response": [
+                        {
+                          "id": "752939f4-7000-453c-9668-801754ad995d",
+                          "name": "Successfully retrieved policy",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "X-Vault-Token",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/sys/policies/acl/:name",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "sys",
+                                "policies",
+                                "acl",
+                                ":name"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "name"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"data\": {\n    \"name\": \"<string>\",\n    \"policy\": \"<string>\"\n  }\n}",
+                          "createdAt": "2026-07-28T03:26:39.000Z",
+                          "updatedAt": "2026-07-28T03:26:39.000Z",
+                          "uid": "35240-752939f4-7000-453c-9668-801754ad995d"
+                        },
+                        {
+                          "id": "f8110c69-024c-4d5a-bd93-d0be37048061",
+                          "name": "Permission denied",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "X-Vault-Token",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/sys/policies/acl/:name",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "sys",
+                                "policies",
+                                "acl",
+                                ":name"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "name"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Forbidden",
+                          "code": 403,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"errors\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "createdAt": "2026-07-28T03:26:39.000Z",
+                          "updatedAt": "2026-07-28T03:26:39.000Z",
+                          "uid": "35240-f8110c69-024c-4d5a-bd93-d0be37048061"
+                        },
+                        {
+                          "id": "356106e1-52ee-45c3-a826-2ad79fd5e298",
+                          "name": "Policy not found",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "X-Vault-Token",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/sys/policies/acl/:name",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "sys",
+                                "policies",
+                                "acl",
+                                ":name"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "name"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"errors\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "createdAt": "2026-07-28T03:26:39.000Z",
+                          "updatedAt": "2026-07-28T03:26:39.000Z",
+                          "uid": "35240-356106e1-52ee-45c3-a826-2ad79fd5e298"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T03:26:39.000Z",
+                      "updatedAt": "2026-07-28T03:26:39.000Z",
+                      "uid": "35240-298472c0-e5d1-4d61-88b4-cc8649982e34"
+                    },
+                    {
+                      "name": "HashiCorp Vault Write ACL Policy",
+                      "id": "31b7f0c5-3eb9-49b7-a948-df736641c64a",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"policy\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/sys/policies/acl/:name",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "sys",
+                            "policies",
+                            "acl",
+                            ":name"
+                          ],
+                          "variable": [
+                            {
+                              "id": "f5fc3ce1-e9ae-463a-a815-ad8355c971f9",
+                              "key": "name",
+                              "value": "<string>",
+                              "description": "(Required) Name of the policy."
+                            }
+                          ]
+                        },
+                        "description": "Create or update an ACL policy. Policies are written in HashiCorp Configuration Language (HCL) and define path-based access rules with capabilities such as create, read, update, delete, list, and sudo."
+                      },
+                      "response": [
+                        {
+                          "id": "592878fc-dcf1-495c-974d-e1aead14ef2b",
+                          "name": "Policy created or updated successfully",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "X-Vault-Token",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"policy\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/sys/policies/acl/:name",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "sys",
+                                "policies",
+                                "acl",
+                                ":name"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "name"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "No Content",
+                          "code": 204,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T03:26:39.000Z",
+                          "updatedAt": "2026-07-28T03:26:39.000Z",
+                          "uid": "35240-592878fc-dcf1-495c-974d-e1aead14ef2b"
+                        },
+                        {
+                          "id": "eef24c28-5259-4e06-9a09-826f1dc2329f",
+                          "name": "Bad request - invalid policy syntax",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "X-Vault-Token",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"policy\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/sys/policies/acl/:name",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "sys",
+                                "policies",
+                                "acl",
+                                ":name"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "name"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"errors\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "createdAt": "2026-07-28T03:26:39.000Z",
+                          "updatedAt": "2026-07-28T03:26:39.000Z",
+                          "uid": "35240-eef24c28-5259-4e06-9a09-826f1dc2329f"
+                        },
+                        {
+                          "id": "0a412047-5d60-416d-bc04-355d5959167c",
+                          "name": "Permission denied",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "X-Vault-Token",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"policy\": \"<string>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/sys/policies/acl/:name",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "sys",
+                                "policies",
+                                "acl",
+                                ":name"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "name"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Forbidden",
+                          "code": 403,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"errors\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "createdAt": "2026-07-28T03:26:39.000Z",
+                          "updatedAt": "2026-07-28T03:26:39.000Z",
+                          "uid": "35240-0a412047-5d60-416d-bc04-355d5959167c"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T03:26:39.000Z",
+                      "updatedAt": "2026-07-28T03:26:39.000Z",
+                      "uid": "35240-31b7f0c5-3eb9-49b7-a948-df736641c64a"
+                    },
+                    {
+                      "name": "HashiCorp Vault Delete ACL Policy",
+                      "id": "1a4053aa-b4d4-4eec-86c6-864a29e937a3",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/sys/policies/acl/:name",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "sys",
+                            "policies",
+                            "acl",
+                            ":name"
+                          ],
+                          "variable": [
+                            {
+                              "id": "41e5dde5-c3ba-46f8-a941-f1c8eb86f211",
+                              "key": "name",
+                              "value": "<string>",
+                              "description": "(Required) Name of the policy."
+                            }
+                          ]
+                        },
+                        "description": "Delete an ACL policy from Vault. Tokens associated with this policy will lose access defined by the policy."
+                      },
+                      "response": [
+                        {
+                          "id": "79b9eb15-0f6e-450e-8cb9-c96520a6a786",
+                          "name": "Policy deleted successfully",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "X-Vault-Token",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/sys/policies/acl/:name",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "sys",
+                                "policies",
+                                "acl",
+                                ":name"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "name"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "No Content",
+                          "code": 204,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T03:26:39.000Z",
+                          "updatedAt": "2026-07-28T03:26:39.000Z",
+                          "uid": "35240-79b9eb15-0f6e-450e-8cb9-c96520a6a786"
+                        },
+                        {
+                          "id": "b7b39d27-358c-4a59-81ae-16bcad6d8f92",
+                          "name": "Permission denied",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: apikey",
+                                "key": "X-Vault-Token",
+                                "value": "<API Key>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/sys/policies/acl/:name",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "sys",
+                                "policies",
+                                "acl",
+                                ":name"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "name"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Forbidden",
+                          "code": 403,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"errors\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                          "createdAt": "2026-07-28T03:26:39.000Z",
+                          "updatedAt": "2026-07-28T03:26:39.000Z",
+                          "uid": "35240-b7b39d27-358c-4a59-81ae-16bcad6d8f92"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T03:26:39.000Z",
+                      "updatedAt": "2026-07-28T03:26:39.000Z",
+                      "uid": "35240-1a4053aa-b4d4-4eec-86c6-864a29e937a3"
+                    }
+                  ],
+                  "id": "bce4105b-00e9-465a-b596-828a7ac346e1",
+                  "createdAt": "2026-07-28T03:26:39.000Z",
+                  "updatedAt": "2026-07-28T03:26:39.000Z",
+                  "uid": "35240-bce4105b-00e9-465a-b596-828a7ac346e1"
+                },
+                {
+                  "name": "HashiCorp Vault List ACL Policies",
+                  "id": "a5a47f06-3617-4691-802f-0610fe16faeb",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/sys/policies/acl",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "sys",
+                        "policies",
+                        "acl"
+                      ]
+                    },
+                    "description": "List all ACL policies currently configured in Vault. Returns a list of policy names."
+                  },
+                  "response": [
+                    {
+                      "id": "75a08575-b417-44c0-a28b-954d14c410f8",
+                      "name": "Successfully retrieved policy list",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-Vault-Token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/sys/policies/acl",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "sys",
+                            "policies",
+                            "acl"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"data\": {\n    \"policies\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                      "createdAt": "2026-07-28T03:26:39.000Z",
+                      "updatedAt": "2026-07-28T03:26:39.000Z",
+                      "uid": "35240-75a08575-b417-44c0-a28b-954d14c410f8"
+                    },
+                    {
+                      "id": "28e099ce-66e1-4133-b5a9-a6f3316bfc89",
+                      "name": "Permission denied",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-Vault-Token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/sys/policies/acl",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "sys",
+                            "policies",
+                            "acl"
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "createdAt": "2026-07-28T03:26:39.000Z",
+                      "updatedAt": "2026-07-28T03:26:39.000Z",
+                      "uid": "35240-28e099ce-66e1-4133-b5a9-a6f3316bfc89"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:26:39.000Z",
+                  "updatedAt": "2026-07-28T03:26:39.000Z",
+                  "uid": "35240-a5a47f06-3617-4691-802f-0610fe16faeb"
+                }
+              ],
+              "id": "19cba258-ed1f-4bf5-b579-8152331105bf",
+              "createdAt": "2026-07-28T03:26:39.000Z",
+              "updatedAt": "2026-07-28T03:26:39.000Z",
+              "uid": "35240-19cba258-ed1f-4bf5-b579-8152331105bf"
+            }
+          ],
+          "id": "cb8e52b6-7a3b-49c4-80c1-00ecf64723c5",
+          "createdAt": "2026-07-28T03:26:39.000Z",
+          "updatedAt": "2026-07-28T03:26:39.000Z",
+          "uid": "35240-cb8e52b6-7a3b-49c4-80c1-00ecf64723c5"
+        }
+      ],
+      "id": "a6e535a3-2e65-4a1d-8c22-777fa0259be7",
+      "createdAt": "2026-07-28T03:26:39.000Z",
+      "updatedAt": "2026-07-28T03:26:39.000Z",
+      "uid": "35240-a6e535a3-2e65-4a1d-8c22-777fa0259be7"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Vault-Token",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://vault.example.com/v1"
+    }
+  ]
+}

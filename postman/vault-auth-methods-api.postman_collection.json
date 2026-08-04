@@ -1,0 +1,550 @@
+{
+  "info": {
+    "_postman_id": "1e4789b0-b99b-41f0-b281-0f700dcacc1f",
+    "name": "HashiCorp Vault KV Secrets Engine Auth Methods API",
+    "description": "The HashiCorp Vault KV (Key/Value) secrets engine API provides endpoints for reading, writing, versioning, and managing secrets stored in Vault. KV v2 supports secret versioning, metadata management, soft delete, and permanent destruction of secret versions. All paths are mounted under the KV engine mount point (default: secret/).\n\nContact Support:\n Name: HashiCorp Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:26:35.000Z",
+    "updatedAt": "2026-07-28T03:26:36.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-1e4789b0-b99b-41f0-b281-0f700dcacc1f"
+  },
+  "item": [
+    {
+      "name": "sys",
+      "item": [
+        {
+          "name": "auth",
+          "item": [
+            {
+              "name": "{path}",
+              "item": [
+                {
+                  "name": "HashiCorp Vault Enable Auth Method",
+                  "id": "7378912e-092d-40e0-bf6c-eead56165b1d",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"type\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/sys/auth/:path",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "sys",
+                        "auth",
+                        ":path"
+                      ],
+                      "variable": [
+                        {
+                          "id": "454520e1-6aeb-46dd-9db7-b8d052f4750a",
+                          "key": "path",
+                          "value": "<string>",
+                          "description": "(Required) Mount path for the auth method or secrets engine. Must not contain slashes at the beginning or end."
+                        }
+                      ]
+                    },
+                    "description": "Enable a new auth method at the specified path. Requires sudo capability. Supported types include approle, aws, azure, github, jwt, kubernetes, ldap, oidc, okta, radius, token, and userpass."
+                  },
+                  "response": [
+                    {
+                      "id": "d0730747-61c5-4bfe-b892-bcb92db20e03",
+                      "name": "Auth method enabled successfully",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-Vault-Token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"type\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/sys/auth/:path",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "sys",
+                            "auth",
+                            ":path"
+                          ],
+                          "variable": [
+                            {
+                              "key": "path"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "No Content",
+                      "code": 204,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T03:26:36.000Z",
+                      "updatedAt": "2026-07-28T03:26:36.000Z",
+                      "uid": "35240-d0730747-61c5-4bfe-b892-bcb92db20e03"
+                    },
+                    {
+                      "id": "cb852a78-80e6-4199-821e-12322af3ba0e",
+                      "name": "Bad request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-Vault-Token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"type\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/sys/auth/:path",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "sys",
+                            "auth",
+                            ":path"
+                          ],
+                          "variable": [
+                            {
+                              "key": "path"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "createdAt": "2026-07-28T03:26:36.000Z",
+                      "updatedAt": "2026-07-28T03:26:36.000Z",
+                      "uid": "35240-cb852a78-80e6-4199-821e-12322af3ba0e"
+                    },
+                    {
+                      "id": "2b1813f4-4acd-464f-bc9c-22df764a15f4",
+                      "name": "Permission denied",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-Vault-Token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"type\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/sys/auth/:path",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "sys",
+                            "auth",
+                            ":path"
+                          ],
+                          "variable": [
+                            {
+                              "key": "path"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "createdAt": "2026-07-28T03:26:36.000Z",
+                      "updatedAt": "2026-07-28T03:26:36.000Z",
+                      "uid": "35240-2b1813f4-4acd-464f-bc9c-22df764a15f4"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:26:36.000Z",
+                  "updatedAt": "2026-07-28T03:26:36.000Z",
+                  "uid": "35240-7378912e-092d-40e0-bf6c-eead56165b1d"
+                },
+                {
+                  "name": "HashiCorp Vault Disable Auth Method",
+                  "id": "c87f39e5-35a0-4f7e-99fc-78883657ae97",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/sys/auth/:path",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "sys",
+                        "auth",
+                        ":path"
+                      ],
+                      "variable": [
+                        {
+                          "id": "c1e2b972-59c1-4fe4-8e9e-c656b9a39562",
+                          "key": "path",
+                          "value": "<string>",
+                          "description": "(Required) Mount path for the auth method or secrets engine. Must not contain slashes at the beginning or end."
+                        }
+                      ]
+                    },
+                    "description": "Disable the auth method at the specified path. Any tokens associated with this auth method will be revoked. Requires sudo capability."
+                  },
+                  "response": [
+                    {
+                      "id": "5d374d64-d861-457e-9414-814bb7c2f091",
+                      "name": "Auth method disabled successfully",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-Vault-Token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/sys/auth/:path",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "sys",
+                            "auth",
+                            ":path"
+                          ],
+                          "variable": [
+                            {
+                              "key": "path"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "No Content",
+                      "code": 204,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T03:26:36.000Z",
+                      "updatedAt": "2026-07-28T03:26:36.000Z",
+                      "uid": "35240-5d374d64-d861-457e-9414-814bb7c2f091"
+                    },
+                    {
+                      "id": "cf051df7-3561-41e3-b54e-b79783c679ef",
+                      "name": "Permission denied",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: apikey",
+                            "key": "X-Vault-Token",
+                            "value": "<API Key>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/sys/auth/:path",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "sys",
+                            "auth",
+                            ":path"
+                          ],
+                          "variable": [
+                            {
+                              "key": "path"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "createdAt": "2026-07-28T03:26:36.000Z",
+                      "updatedAt": "2026-07-28T03:26:36.000Z",
+                      "uid": "35240-cf051df7-3561-41e3-b54e-b79783c679ef"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T03:26:36.000Z",
+                  "updatedAt": "2026-07-28T03:26:36.000Z",
+                  "uid": "35240-c87f39e5-35a0-4f7e-99fc-78883657ae97"
+                }
+              ],
+              "id": "a7c347fe-4a06-4b82-b2ff-653427892697",
+              "createdAt": "2026-07-28T03:26:36.000Z",
+              "updatedAt": "2026-07-28T03:26:36.000Z",
+              "uid": "35240-a7c347fe-4a06-4b82-b2ff-653427892697"
+            },
+            {
+              "name": "HashiCorp Vault List Auth Methods",
+              "id": "4d729359-0071-4766-a66a-af10555b989a",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/sys/auth",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "sys",
+                    "auth"
+                  ]
+                },
+                "description": "List all currently enabled authentication methods. Returns configuration details for each auth method including type, description, and tuning settings."
+              },
+              "response": [
+                {
+                  "id": "16dfa8e6-5bbc-4c36-b0a7-e6c5ae285a62",
+                  "name": "Successfully retrieved auth methods",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-Vault-Token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/sys/auth",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "sys",
+                        "auth"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"data\": {\n    \"consequatc0a\": {\n      \"type\": \"<string>\",\n      \"description\": \"<string>\",\n      \"accessor\": \"<string>\"\n    }\n  }\n}",
+                  "createdAt": "2026-07-28T03:26:36.000Z",
+                  "updatedAt": "2026-07-28T03:26:36.000Z",
+                  "uid": "35240-16dfa8e6-5bbc-4c36-b0a7-e6c5ae285a62"
+                },
+                {
+                  "id": "576e31d8-0ecc-4799-aa07-0d2a5f142922",
+                  "name": "Permission denied",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-Vault-Token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/sys/auth",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "sys",
+                        "auth"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "createdAt": "2026-07-28T03:26:36.000Z",
+                  "updatedAt": "2026-07-28T03:26:36.000Z",
+                  "uid": "35240-576e31d8-0ecc-4799-aa07-0d2a5f142922"
+                }
+              ],
+              "createdAt": "2026-07-28T03:26:36.000Z",
+              "updatedAt": "2026-07-28T03:26:36.000Z",
+              "uid": "35240-4d729359-0071-4766-a66a-af10555b989a"
+            }
+          ],
+          "id": "7090adb4-5a14-4db3-a4ad-17c13ac33fc0",
+          "createdAt": "2026-07-28T03:26:36.000Z",
+          "updatedAt": "2026-07-28T03:26:36.000Z",
+          "uid": "35240-7090adb4-5a14-4db3-a4ad-17c13ac33fc0"
+        }
+      ],
+      "id": "33b20ed8-8588-44ff-8abc-cae75efdf4fd",
+      "createdAt": "2026-07-28T03:26:36.000Z",
+      "updatedAt": "2026-07-28T03:26:36.000Z",
+      "uid": "35240-33b20ed8-8588-44ff-8abc-cae75efdf4fd"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Vault-Token",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://vault.example.com/v1"
+    }
+  ]
+}

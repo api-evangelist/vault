@@ -1,0 +1,201 @@
+{
+  "info": {
+    "_postman_id": "e485c5a6-c8fe-4d62-83b4-953a0b6e2981",
+    "name": "HashiCorp Vault KV Secrets Engine Auth Methods Health API",
+    "description": "The HashiCorp Vault KV (Key/Value) secrets engine API provides endpoints for reading, writing, versioning, and managing secrets stored in Vault. KV v2 supports secret versioning, metadata management, soft delete, and permanent destruction of secret versions. All paths are mounted under the KV engine mount point (default: secret/).\n\nContact Support:\n Name: HashiCorp Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:26:36.000Z",
+    "updatedAt": "2026-07-28T03:26:37.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-e485c5a6-c8fe-4d62-83b4-953a0b6e2981"
+  },
+  "item": [
+    {
+      "name": "sys",
+      "item": [
+        {
+          "name": "health",
+          "item": [
+            {
+              "name": "HashiCorp Vault Get Health Status",
+              "id": "cf656759-542c-4652-8c31-0da9649b1ad3",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/sys/health",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "sys",
+                    "health"
+                  ]
+                },
+                "description": "Returns the health status of Vault. Returns HTTP 200 if Vault is initialized and unsealed, 429 if standby, 472 if recovery mode, and 503 if sealed or uninitialized."
+              },
+              "response": [
+                {
+                  "id": "c1320f35-8ba7-43fa-8b0b-4a01eff3d398",
+                  "name": "Vault is initialized and active (leader)",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-Vault-Token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/sys/health",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "sys",
+                        "health"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"initialized\": \"<boolean>\",\n  \"sealed\": \"<boolean>\",\n  \"standby\": \"<boolean>\",\n  \"version\": \"<string>\",\n  \"cluster_name\": \"<string>\",\n  \"cluster_id\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T03:26:37.000Z",
+                  "updatedAt": "2026-07-28T03:26:37.000Z",
+                  "uid": "35240-c1320f35-8ba7-43fa-8b0b-4a01eff3d398"
+                },
+                {
+                  "id": "d553f0b3-3b43-4bed-bc11-055ced4dc1bb",
+                  "name": "Vault is standby",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-Vault-Token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/sys/health",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "sys",
+                        "health"
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T03:26:37.000Z",
+                  "updatedAt": "2026-07-28T03:26:37.000Z",
+                  "uid": "35240-d553f0b3-3b43-4bed-bc11-055ced4dc1bb"
+                },
+                {
+                  "id": "032a9b44-101a-4fdf-baf2-490ede32f4fd",
+                  "name": "Vault is sealed or uninitialized",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: apikey",
+                        "key": "X-Vault-Token",
+                        "value": "<API Key>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/sys/health",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "sys",
+                        "health"
+                      ]
+                    }
+                  },
+                  "status": "Service Unavailable",
+                  "code": 503,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T03:26:37.000Z",
+                  "updatedAt": "2026-07-28T03:26:37.000Z",
+                  "uid": "35240-032a9b44-101a-4fdf-baf2-490ede32f4fd"
+                }
+              ],
+              "createdAt": "2026-07-28T03:26:37.000Z",
+              "updatedAt": "2026-07-28T03:26:37.000Z",
+              "uid": "35240-cf656759-542c-4652-8c31-0da9649b1ad3"
+            }
+          ],
+          "id": "be88db18-60b0-4567-86a3-1bd0d79e9f66",
+          "createdAt": "2026-07-28T03:26:37.000Z",
+          "updatedAt": "2026-07-28T03:26:37.000Z",
+          "uid": "35240-be88db18-60b0-4567-86a3-1bd0d79e9f66"
+        }
+      ],
+      "id": "85840656-21da-4acc-9f91-fd0c7685e526",
+      "createdAt": "2026-07-28T03:26:37.000Z",
+      "updatedAt": "2026-07-28T03:26:37.000Z",
+      "uid": "35240-85840656-21da-4acc-9f91-fd0c7685e526"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Vault-Token",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://vault.example.com/v1"
+    }
+  ]
+}
