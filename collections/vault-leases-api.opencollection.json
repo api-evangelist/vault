@@ -1,0 +1,71 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "HashiCorp Vault KV Secrets Engine Auth Methods Leases API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Vault-Token",
+      "value": "{{X-Vault-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Leases",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "HashiCorp Vault Lookup Lease",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://vault.example.com/v1/sys/leases/lookup",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieve information about a lease including its expiration time, renewable status, and associated secret path."
+        },
+        {
+          "info": {
+            "name": "HashiCorp Vault Renew Lease",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://vault.example.com/v1/sys/leases/renew",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Renew a lease, extending the TTL of the associated secret or token. Only renewable leases can be renewed."
+        },
+        {
+          "info": {
+            "name": "HashiCorp Vault Revoke Lease",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://vault.example.com/v1/sys/leases/revoke",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Revoke a lease and the associated secret. For dynamic secrets, this will trigger revocation of the credential in the target system."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

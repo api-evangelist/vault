@@ -1,0 +1,98 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "HashiCorp Vault KV Secrets Engine Auth Methods Policies API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Vault-Token",
+      "value": "{{X-Vault-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Policies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "HashiCorp Vault List ACL Policies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.example.com/v1/sys/policies/acl"
+          },
+          "docs": "List all ACL policies currently configured in Vault. Returns a list of policy names."
+        },
+        {
+          "info": {
+            "name": "HashiCorp Vault Read ACL Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.example.com/v1/sys/policies/acl/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the policy."
+              }
+            ]
+          },
+          "docs": "Retrieve the HCL rules for an ACL policy by name. Returns the policy document which defines path-based access rules."
+        },
+        {
+          "info": {
+            "name": "HashiCorp Vault Write ACL Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.example.com/v1/sys/policies/acl/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the policy."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create or update an ACL policy. Policies are written in HashiCorp Configuration Language (HCL) and define path-based access rules with capabilities such as create, read, update, delete, list, and sudo."
+        },
+        {
+          "info": {
+            "name": "HashiCorp Vault Delete ACL Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://vault.example.com/v1/sys/policies/acl/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the policy."
+              }
+            ]
+          },
+          "docs": "Delete an ACL policy from Vault. Tokens associated with this policy will lose access defined by the policy."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

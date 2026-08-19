@@ -1,0 +1,79 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "HashiCorp Vault KV Secrets Engine Auth Methods API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Vault-Token",
+      "value": "{{X-Vault-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Auth Methods",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "HashiCorp Vault List Auth Methods",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.example.com/v1/sys/auth"
+          },
+          "docs": "List all currently enabled authentication methods. Returns configuration details for each auth method including type, description, and tuning settings."
+        },
+        {
+          "info": {
+            "name": "HashiCorp Vault Enable Auth Method",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://vault.example.com/v1/sys/auth/:path",
+            "params": [
+              {
+                "name": "path",
+                "value": "",
+                "type": "path",
+                "description": "Mount path for the auth method or secrets engine. Must not contain slashes at the beginning or end."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Enable a new auth method at the specified path. Requires sudo capability. Supported types include approle, aws, azure, github, jwt, kubernetes, ldap, oidc, okta, radius, token, and userpass."
+        },
+        {
+          "info": {
+            "name": "HashiCorp Vault Disable Auth Method",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://vault.example.com/v1/sys/auth/:path",
+            "params": [
+              {
+                "name": "path",
+                "value": "",
+                "type": "path",
+                "description": "Mount path for the auth method or secrets engine. Must not contain slashes at the beginning or end."
+              }
+            ]
+          },
+          "docs": "Disable the auth method at the specified path. Any tokens associated with this auth method will be revoked. Requires sudo capability."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,209 @@
+{
+  "item": [
+    {
+      "id": "1be2cb66-f4d6-4a83-b26e-86835607ef6a",
+      "name": "Health",
+      "description": {
+        "content": "Check Vault health and initialization status.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c46de0a8-5511-4a5f-ba99-53c77e05324f",
+          "name": "HashiCorp Vault Get Health Status",
+          "request": {
+            "name": "HashiCorp Vault Get Health Status",
+            "description": {
+              "content": "Returns the health status of Vault. Returns HTTP 200 if Vault is initialized and unsealed, 429 if standby, 472 if recovery mode, and 503 if sealed or uninitialized.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sys",
+                "health"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d4491b5c-940f-48ae-802b-f1416e95240c",
+              "name": "Vault is initialized and active (leader)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sys",
+                    "health"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Vault-Token",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"initialized\": true,\n  \"sealed\": false,\n  \"standby\": false,\n  \"version\": \"2.0.0\",\n  \"cluster_name\": \"vault-cluster-01\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "354073ec-4caa-4768-9765-716158c68e33",
+              "name": "Vault is standby",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sys",
+                    "health"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Vault-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "78adb130-bf30-4528-9a00-5d6329f2c5cf",
+              "name": "Vault is sealed or uninitialized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sys",
+                    "health"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Vault-Token",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://vault.example.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-Vault-Token"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "dbcbed85-8519-4ece-b09b-8aec0cff290b",
+    "name": "HashiCorp Vault KV Secrets Engine Auth Methods Health API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The HashiCorp Vault KV (Key/Value) secrets engine API provides endpoints for reading, writing, versioning, and managing secrets stored in Vault. KV v2 supports secret versioning, metadata management, soft delete, and permanent destruction of secret versions. All paths are mounted under the KV engine mount point (default: secret/).\n\nContact Support:\n Name: HashiCorp Support",
+      "type": "text/plain"
+    }
+  }
+}

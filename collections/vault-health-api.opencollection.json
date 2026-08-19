@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "HashiCorp Vault KV Secrets Engine Auth Methods Health API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-Vault-Token",
+      "value": "{{X-Vault-Token}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Health",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "HashiCorp Vault Get Health Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://vault.example.com/v1/sys/health"
+          },
+          "docs": "Returns the health status of Vault. Returns HTTP 200 if Vault is initialized and unsealed, 429 if standby, 472 if recovery mode, and 503 if sealed or uninitialized."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
