@@ -26,6 +26,13 @@ image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/vault.png
 tags:
   - DevOps
   - Encryption
+  - Open-Source
+  - PKI
+  - Secrets Management
+  - Security
+tags_raw:
+  - DevOps
+  - Encryption
   - Open Source
   - PKI
   - Secrets Management
