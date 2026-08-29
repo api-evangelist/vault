@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: HashiCorp Vault KV Secrets Engine Auth Methods Leases API
   description: 'The HashiCorp Vault KV (Key/Value) secrets engine API provides endpoints for reading, writing, versioning, and managing secrets stored in Vault. KV v2 supports secret versioning, metadata management, soft delete, and permanent destruction of secret versions. All paths are mounted under the KV engine mount point (default: secret/).'
@@ -214,16 +214,6 @@ components:
               type: integer
               description: Remaining TTL in seconds.
               example: 3600
-    VaultError:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: string
-          description: List of error messages.
-          example:
-          - permission denied
     RenewLeaseRequest:
       type: object
       required:
@@ -237,6 +227,16 @@ components:
           type: integer
           description: Requested renewal duration in seconds. Vault may return a shorter duration based on policy limits.
           example: 3600
+    VaultError:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+          description: List of error messages.
+          example:
+          - permission denied
   securitySchemes:
     vaultToken:
       type: apiKey

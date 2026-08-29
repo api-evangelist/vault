@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: HashiCorp Vault KV Secrets Engine Auth Methods Policies API
   description: 'The HashiCorp Vault KV (Key/Value) secrets engine API provides endpoints for reading, writing, versioning, and managing secrets stored in Vault. KV v2 supports secret versioning, metadata management, soft delete, and permanent destruction of secret versions. All paths are mounted under the KV engine mount point (default: secret/).'
@@ -151,16 +151,30 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  parameters:
-    PolicyName:
-      name: name
-      in: path
-      required: true
-      description: Name of the policy.
-      schema:
-        type: string
-        example: dev-policy
   schemas:
+    PolicyResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Policy name.
+              example: dev-policy
+            policy:
+              type: string
+              description: HCL policy document.
+              example: path "secret/*" { capabilities = ["read"] }
+    PolicyRequest:
+      type: object
+      required:
+      - policy
+      properties:
+        policy:
+          type: string
+          description: HCL policy document defining path-based access rules. Capabilities include create, read, update, delete, list, and sudo.
+          example: path "secret/data/myapp/*" { capabilities = ["create", "read", "update"] }
     PoliciesListResponse:
       type: object
       properties:
@@ -176,20 +190,6 @@ components:
               - default
               - root
               - dev-policy
-    PolicyResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            name:
-              type: string
-              description: Policy name.
-              example: dev-policy
-            policy:
-              type: string
-              description: HCL policy document.
-              example: path "secret/*" { capabilities = ["read"] }
     VaultError:
       type: object
       properties:
@@ -200,15 +200,15 @@ components:
           description: List of error messages.
           example:
           - permission denied
-    PolicyRequest:
-      type: object
-      required:
-      - policy
-      properties:
-        policy:
-          type: string
-          description: HCL policy document defining path-based access rules. Capabilities include create, read, update, delete, list, and sudo.
-          example: path "secret/data/myapp/*" { capabilities = ["create", "read", "update"] }
+  parameters:
+    PolicyName:
+      name: name
+      in: path
+      required: true
+      description: Name of the policy.
+      schema:
+        type: string
+        example: dev-policy
   securitySchemes:
     vaultToken:
       type: apiKey

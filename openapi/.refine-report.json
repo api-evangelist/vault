@@ -23,6 +23,16 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "vault-auth-methods-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "vault-health-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "vault-leases-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "vault-policies-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "vault-secrets-config-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "vault-secrets-data-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "vault-secrets-engines-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "vault-secrets-metadata-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
   "skipped": []
 }
