@@ -7,6 +7,19 @@ description: >-
   secrets, data encryption, PKI, SSH certificate issuance, and identity-based access through a comprehensive REST HTTP
   API.
 type: Index
+deliveryModel:
+  model: unknown
+  open_source: unknown
+  commercial: true
+  callable_host: false
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - openapi
+  - pricing
+  - repository-unlicensed
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
@@ -323,6 +336,14 @@ apis:
   - type: JSONLD
     url: json-ld/vault-sys-context.jsonld
 common:
+  - type: IssueTracker
+    url: https://github.com/hashicorp/vault/issues
+  - type: Releases
+    url: https://github.com/hashicorp/vault/releases
+  - type: CodeOfConduct
+    url: https://github.com/hashicorp/vault/blob/main/.github/CODE_OF_CONDUCT.md
+  - type: ContributionGuide
+    url: https://github.com/hashicorp/vault/blob/main/CONTRIBUTING.md
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/hashicorp-vault/overview
   - type: AgenticAccess
