@@ -33,9 +33,10 @@ accessModel:
   - plans
   - authentication
   - security
-  generated: '2026-08-26'
+  - {url: 'https://www.vaultproject.io', status: 308, note: 'declared website redirects to https://developer.hashicorp.com/vault — a different registrable domain (vaultproject.io -> hashicorp.com), possible rename or acquisition (probed 2026-09-03, roadmap#169)'}
+  generated: '2026-09-03'
   method: derived
-position: Consumer
+position: Consuming
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/vault.png
 tags:
